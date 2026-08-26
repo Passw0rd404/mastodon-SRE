@@ -1,0 +1,7 @@
+apiVersion: v2
+name: mastodon-postgresql
+description: CloudNativePG PostgreSQL cluster, databases, roles, and PgBouncer poolers for Mastodon
+type: application
+
+version: 0.1.0
+appVersion: "1.0"

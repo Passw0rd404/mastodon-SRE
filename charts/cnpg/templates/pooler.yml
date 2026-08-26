@@ -1,0 +1,55 @@
+{{- if .Values.poolerRW.enabled }}
+{{- with .Values.poolerRW }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: mastodon-pooler-rw
+  namespace: {{ $.Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ $.Values.cluster.name | quote }}
+  instances: {{ .instances }}
+  type: rw
+  pgbouncer:
+    {{- toYaml .pgbouncer | nindent 4 }}
+  template:
+    spec:
+      containers:
+        - name: pgbouncer
+          resources:
+            requests:
+              cpu: {{ .resources.requests.cpu | quote }}
+              memory: {{ .resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .resources.limits.cpu | quote }}
+              memory: {{ .resources.limits.memory | quote }}
+{{- end }}
+{{- end }}
+---
+{{- if .Values.poolerRO.enabled }}
+{{- with .Values.poolerRO }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: mastodon-pooler-ro
+  namespace: {{ $.Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ $.Values.cluster.name | quote }}
+  instances: {{ .instances }}
+  type: ro
+  pgbouncer:
+    {{- toYaml .pgbouncer | nindent 4 }}
+  template:
+    spec:
+      containers:
+        - name: pgbouncer
+          resources:
+            requests:
+              cpu: {{ .resources.requests.cpu | quote }}
+              memory: {{ .resources.requests.memory | quote }}
+            limits:
+              cpu: {{ .resources.limits.cpu | quote }}
+              memory: {{ .resources.limits.memory | quote }}
+{{- end }}
+{{- end }}

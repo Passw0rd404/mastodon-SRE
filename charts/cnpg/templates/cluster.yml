@@ -1,0 +1,53 @@
+{{- with .Values.cluster }}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .name | quote }}
+  namespace: {{ $.Values.namespace | quote }}
+
+spec:
+  instances: {{ .instances }}
+  primaryUpdateStrategy: {{ .primaryUpdateStrategy | default "unsupervised" | quote }}
+  primaryUpdateMethod: {{ .primaryUpdateMethod | default "switchover" | quote }}
+
+  {{- with .affinity }}
+  affinity:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  resources:
+    requests:
+      cpu: {{ .resources.requests.cpu | quote }}
+      memory: {{ .resources.requests.memory | quote }}
+    limits:
+      cpu: {{ .resources.limits.cpu | quote }}
+      memory: {{ .resources.limits.memory | quote }}
+
+  bootstrap:
+    initdb:
+      database: mastodon
+      owner: mastodon
+      secret:
+        name: {{ .bootstrap.existingSecret | quote }}
+
+  storage:
+    size: {{ .storage.size | default "20Gi" | quote }}
+    storageClass: {{ .storage.storageClass | default "" | quote }}
+    resizeInUseVolumes: {{ .storage.resizeInUseVolumes | default true }}
+
+  postgresql:
+    parameters:
+      {{- toYaml .postgresql.parameters | nindent 6 }}
+
+  {{- if $.Values.backup.enabled }}
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: {{ $.Values.backup.wal.enabled | default false }}
+      parameters:
+        barmanObjectName: {{ .name }}-backup-store
+  {{- end }}
+
+  monitoring:
+    enablePodMonitor: {{ .monitoring.podMonitor.enabled | default false }}
+
+{{- end }}

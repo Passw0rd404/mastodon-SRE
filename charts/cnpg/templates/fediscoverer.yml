@@ -1,0 +1,47 @@
+{{- if .Values.fediscoverer.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: fediscoverer
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ .Values.cluster.name | quote }}
+  name: fediscoverer
+  login: true
+  passwordSecret:
+    name: {{ .Values.fediscoverer.existingSecret | quote }}
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: fediscoverer-production
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ .Values.cluster.name | quote }}
+  name: fediscoverer_production
+  owner: fediscoverer
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: fediscoverer-production-cache
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ .Values.cluster.name | quote }}
+  name: fediscoverer_production_cache
+  owner: fediscoverer
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: fediscoverer-production-queue
+  namespace: {{ .Values.namespace | quote }}
+spec:
+  cluster:
+    name: {{ .Values.cluster.name | quote }}
+  name: fediscoverer_production_queue
+  owner: fediscoverer
+{{- end }}
