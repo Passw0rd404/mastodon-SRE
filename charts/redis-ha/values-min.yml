@@ -1,0 +1,30 @@
+redisHA:
+  replicas: 1
+  sentinel:
+    enabled: false # no failover possible on one node — don't pay for the machinery
+
+  image:
+    repository: valkey/valkey
+    tag: "8.0.1-alpine"
+
+  auth: true
+  existingSecret: mastodon-redis-creds
+
+  haproxy:
+    enabled: false
+
+  persistentVolume:
+    enabled: true # still durable — this one instance now holds Sidekiq's queue state too
+    size: 5Gi
+
+  resources:
+    requests:
+      cpu: "150m"
+      memory: "384Mi"
+    limits:
+      cpu: "500m"
+      memory: "768Mi"
+
+  redis:
+    config:
+      maxmemory-policy: noeviction # can't split cache out, so the whole instance stays non-evicting

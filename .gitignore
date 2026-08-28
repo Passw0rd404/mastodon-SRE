@@ -1,0 +1,61 @@
+# Helm dependency archives
+*.tgz
+
+# Helm local/cache files
+.helm/
+
+# Helm test output
+*.log
+
+# Kubernetes
+*.kubeconfig
+kubeconfig
+kubeconfig.*
+
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+*.secret.yaml
+*.secret.yml
+secrets.yaml
+secrets.yml
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# OS
+Thumbs.db
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# GitHub Actions
+# .github/workflows/ is intentionally NOT ignored

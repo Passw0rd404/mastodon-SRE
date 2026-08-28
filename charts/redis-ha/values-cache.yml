@@ -1,0 +1,14 @@
+redisHA:
+  existingSecret: mastodon-redis-cache-creds
+
+  sentinel:
+    masterGroupName: mastodon-cache
+
+  # -- the one deliberate divergence from the durable instance: no disk at all
+  persistentVolume:
+    enabled: false # chart default is true — this is the actual override that makes it "cache-shaped"
+
+  redis:
+    config:
+      maxmemory-policy: allkeys-lru # disposable data — safe to evict under memory pressure
+      maxmemory: "512mb"

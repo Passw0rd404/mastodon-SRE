@@ -4,4 +4,9 @@ description: CloudNativePG PostgreSQL cluster, databases, roles, and PgBouncer p
 type: application
 
 version: 0.1.0
-appVersion: "1.0"
+appVersion: "1.30.0"
+
+dependencies:
+  - name: cloudnative-pg
+    repository: https://cloudnative-pg.github.io/charts
+    version: "1.30.0"

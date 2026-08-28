@@ -1,7 +1,17 @@
 apiVersion: v2
-name: mastodon-postgresql
-description: CloudNativePG PostgreSQL cluster, databases, roles, and PgBouncer poolers for Mastodon
+
+name: mastodon-redis-ha
+description: |
+  Highly available Redis Sentinel deployment for Mastodon,
+  providing persistent Redis storage and automatic failover
+  for application and Sidekiq workloads.
+
 type: application
 
 version: 0.1.0
-appVersion: "1.0"
+
+dependencies:
+  - name: redis-ha
+    repository: https://dandydeveloper.github.io/charts
+    version: "4.39.0"
+    alias: redisHA

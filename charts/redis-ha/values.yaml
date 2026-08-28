@@ -1,102 +1,48 @@
-namespace: mastodon
+redisHA:
+  replicas: 3
+  image:
+    repository: valkey/valkey
+    tag: "8.0.1-alpine"
+  auth: true
+  existingSecret: mastodon-redis-app-creds # prerequisite secret, key name "auth"
 
-cluster:
-  name: mastodon
-  instances: 1
-  primaryUpdateStrategy: unsupervised
-  primaryUpdateMethod: switchover
-  affinity:
-    podAntiAffinityType: preferred
+  sentinel:
+    customCommand:
+      - valkey-server
+    customArgs:
+      - /data/conf/sentinel.conf
+      - --sentinel
+    quorum: 2
+    masterGroupName: mastodon-app
+    auth: false # sentinel port stays internal-only by default; set true + sentinel.existingSecret to harden further
 
-  resources:
-    requests:
-      cpu: "500m"
-      memory: "1Gi"
-    limits:
-      cpu: "2"
-      memory: "2Gi"
+  haproxy:
+    enabled: false # Mastodon speaks Sentinel directly
 
-  storage:
-    size: 20Gi
-    storageClass: ""
-    resizeInUseVolumes: true
-
-  postgresql:
-    parameters:
-      max_connections: "100"
-      shared_buffers: "512MB"
-      effective_cache_size: "1GB"
-      work_mem: "4MB"
-      shared_preload_libraries: "pg_stat_statements"
-
-  bootstrap:
-    existingSecret: mastodon-pg-app-creds
-
-  monitoring:
-    podMonitor:
-      enabled: true
-
-backup:
-  enabled: true
-  provider: s3 # s3 | azure | gcs
-  destinationPath: "s3://your-bucket/mastodon/" # format depends on provider — see comment below
-  existingSecret: mastodon-pg-backup-creds
-  retentionPolicy: "30d"
-  wal:
+  persistentVolume:
     enabled: true
-    compression: gzip
-    maxParallel: 4
-  data:
-    compression: gzip
-  schedule: "0 0 0 * * *"
+    storageClass: ""
+    size: 10Gi
+    accessModes:
+      - ReadWriteOnce
 
-  # provider-specific — only the block matching `provider:` above is used
-  s3:
-    endpointURL: "https://<account-id>.r2.cloudflarestorage.com" # blank for real AWS S3
-    # existingSecret keys expected: ACCESS_KEY_ID, ACCESS_SECRET_KEY
-  azure:
-    # existingSecret key expected: AZURE_CONNECTION_STRING
-  gcs:
-    # existingSecret key expected: gcsCredentials
+  hardAntiAffinity: false # true forces pods onto separate nodes with no fallback — can fail to schedule on small clusters
 
-poolerRW:
-  enabled: true
-  instances: 1
-  pgbouncer:
-    poolMode: transaction
-    parameters:
-      maxClientConn: 1000
-      defaultPoolSize: 50
-      reservePoolSize: 10
-      reservePoolTimeout: 3
-      serverIdleTimeout: 600
+  topologySpreadConstraints:
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: ScheduleAnyway
+
   resources:
     requests:
-      cpu: "100m"
-      memory: "128Mi"
-    limits:
-      cpu: "500m"
-      memory: "256Mi"
-
-poolerRO:
-  enabled: true
-  instances: 1
-  pgbouncer:
-    poolMode: transaction
-    parameters:
-      maxClientConn: 500
-      defaultPoolSize: 30
-      reservePoolSize: 5
-      reservePoolTimeout: 3
-      serverIdleTimeout: 600
-  resources:
-    requests:
-      cpu: "50m"
-      memory: "64Mi"
-    limits:
       cpu: "250m"
-      memory: "128Mi"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 
-fediscoverer:
-  enabled: true
-  existingSecret: fediscoverer-pg-creds
+  exporter:
+    enabled: false
+
+  redis:
+    config:
+      maxmemory-policy: noeviction
