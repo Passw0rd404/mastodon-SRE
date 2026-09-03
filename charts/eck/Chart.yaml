@@ -1,0 +1,10 @@
+apiVersion: v2
+name: mastodon-elasticsearch
+description: |
+  Elasticsearch for Mastodon full-text search, managed by the ECK operator.
+type: application
+version: 0.1.0
+dependencies:
+  - name: eck-elasticsearch
+    repository: https://helm.elastic.co
+    version: "0.14.0"

@@ -60,3 +60,32 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the database connection URI
+*/}}
+{{- define "fediscoverer.database.uri" -}}
+{{- printf "postgres://%s:%d" .Values.config.database.host (int .Values.config.database.port) }}
+{{- end }}
+
+{{/*
+Create the database connection URI (direct connection)
+*/}}
+{{- define "fediscoverer.database.uriDirect" -}}
+{{- printf "postgres://%s:%d" (coalesce .Values.config.database.direct.host .Values.config.database.host) (int (coalesce .Values.config.database.direct.port .Values.config.database.port)) }}
+{{- end }}
+
+{{/*
+Secret name for the secretKeyBase
+*/}}
+{{- define "fediscoverer.secrets.secretKeyBase" -}}
+{{- if .Values.config.existingSecret }}
+{{- .Values.config.existingSecret }}
+{{- else }}
+{{- if .preDeploy }}
+{{- printf "%s-secret-predeploy" (include "fediscoverer.fullname" .) }}
+{{- else }}
+{{- printf "%s-secret" (include "fediscoverer.fullname" .) }}
+{{- end }}
+{{- end }}
+{{- end }}

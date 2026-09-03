@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fediscoverer.fullname" . }}-jobs
+  labels:
+    {{- include "fediscoverer.labels" . | nindent 4 }}
+    joinmastodon.org/component: fediscoverer-jobs
+    {{- with .Values.jobs.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: {{ coalesce .Values.jobs.replicaCount .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "fediscoverer.selectorLabels" . | nindent 6 }}
+      joinmastodon.org/component: fediscoverer-jobs
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- with .Values.jobs.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "fediscoverer.selectorLabels" . | nindent 8 }}
+        joinmastodon.org/component: fediscoverer-jobs
+        {{- with .Values.jobs.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-jobs
+          command: ["bin/jobs"]
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- with .Values.jobs.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+            {{- include "fediscoverer.env" . | trim | nindent 12 }}
+            {{- if .Values.config.jsonLogging }}
+            - name: JSON_LOGGING
+              value: "true"
+            {{- end }}
+            {{- if or .Values.jobs.otel.enabled (and .Values.otel.enabled (ne .Values.jobs.otel.enabled false)) }}
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ required "OTEL endpoint is required when OTEL is enabled" (coalesce .Values.jobs.otel.endpointUri .Values.otel.endpointUri) }}
+            - name: OTEL_SERVICE_NAME
+              value: {{ coalesce .Values.jobs.otel.serviceName .Values.otel.serviceName }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

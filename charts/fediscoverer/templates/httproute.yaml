@@ -1,4 +1,4 @@
-{{- if .Values.httpRoute.enabled -}}
+{{- if .Values.httproute.enabled -}}
 {{- $fullName := include "fediscoverer.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 apiVersion: gateway.networking.k8s.io/v1
@@ -7,21 +7,20 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "fediscoverer.labels" . | nindent 4 }}
-  {{- with .Values.httpRoute.annotations }}
+    {{- with .Values.httproute.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.httproute.annotations}}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
   parentRefs:
-    {{- with .Values.httpRoute.parentRefs }}
-      {{- toYaml . | nindent 4 }}
-    {{- end }}
-  {{- with .Values.httpRoute.hostnames }}
+    {{- toYaml .Values.httproute.parentRefs | nindent 4 }}
   hostnames:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- toYaml .Values.httproute.hostnames | nindent 4 }}
   rules:
-    {{- range .Values.httpRoute.rules }}
+    {{- range .Values.httproute.rules }}
     {{- with .matches }}
     - matches:
       {{- toYaml . | nindent 8 }}
@@ -31,7 +30,9 @@ spec:
       {{- toYaml . | nindent 8 }}
     {{- end }}
       backendRefs:
-        - name: {{ $fullName }}
+        - group: ''
+          kind: Service
+          name: {{ $fullName }}
           port: {{ $svcPort }}
           weight: 1
     {{- end }}

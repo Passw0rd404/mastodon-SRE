@@ -1,0 +1,41 @@
+eck-elasticsearch:
+  version: 8.15.0
+
+  nodeSets:
+    - name: default
+      count: 3
+      config:
+        node.store.allow_mmap: false
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 20Gi
+            # storageClassName omitted — uses cluster default
+      podTemplate:
+        spec:
+          affinity:
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      elasticsearch.k8s.elastic.co/cluster-name: mastodon-es
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: elasticsearch
+              resources:
+                requests:
+                  cpu: "500m"
+                  memory: "2Gi"
+                limits:
+                  cpu: "1"
+                  memory: "3Gi"
+
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: false
