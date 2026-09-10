@@ -1,4 +1,5 @@
 redisHA:
+  namespace: mastodon
   replicas: 3
   image:
     repository: valkey/valkey
@@ -14,7 +15,8 @@ redisHA:
       - --sentinel
     quorum: 2
     masterGroupName: mastodon-app
-    auth: false # sentinel port stays internal-only by default; set true + sentinel.existingSecret to harden further
+    auth: true
+    existingSecret: mastodon-redis-app-creds
 
   haproxy:
     enabled: false # Mastodon speaks Sentinel directly

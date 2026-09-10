@@ -3,6 +3,8 @@ redisHA:
 
   sentinel:
     masterGroupName: mastodon-cache
+    auth: true
+    existingSecret: mastodon-redis-cache-creds
 
   # -- the one deliberate divergence from the durable instance: no disk at all
   persistentVolume:

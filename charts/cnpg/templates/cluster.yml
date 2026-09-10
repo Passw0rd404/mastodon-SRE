@@ -4,6 +4,7 @@ kind: Cluster
 metadata:
   name: {{ .name | quote }}
   namespace: {{ $.Values.namespace | quote }}
+  {{- include "mastodon.podLabels" .podLabels | nindent 2 }}
 
 spec:
   instances: {{ .instances }}
@@ -13,7 +14,17 @@ spec:
   {{- with .affinity }}
   affinity:
     {{- toYaml . | nindent 4 }}
+    {{- include "mastodon.nodeSelector" $.Values.cluster.nodeSelector | nindent 4 }}
+    {{- include "mastodon.tolerations" $.Values.cluster.tolerations | nindent 4 }}
+  {{- else }}
+  {{- if or .nodeSelector .tolerations }}
+  affinity:
+    {{- include "mastodon.nodeSelector" .nodeSelector | nindent 4 }}
+    {{- include "mastodon.tolerations" .tolerations | nindent 4 }}
   {{- end }}
+  {{- end }}
+
+  {{- include "mastodon.topologySpreadConstraints" .topologySpreadConstraints | nindent 2 }}
 
   resources:
     requests:
@@ -32,7 +43,9 @@ spec:
 
   storage:
     size: {{ .storage.size | default "20Gi" | quote }}
+    {{ if .storage.storageClass }}
     storageClass: {{ .storage.storageClass | default "" | quote }}
+    {{- end }}
     resizeInUseVolumes: {{ .storage.resizeInUseVolumes | default true }}
 
   postgresql:

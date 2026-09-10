@@ -1,0 +1,20 @@
+traefik:
+  env:
+    - name: CF_DNS_API_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: cloudflare-api-token
+          key: api-token
+
+  persistence:
+    enabled: true
+    path: /data
+    size: 128Mi
+
+  certificatesResolvers:
+    cloudflare-resolver:
+      acme:
+        email: you@yourdomain.tld
+        storage: /data/acme.json
+        dnsChallenge:
+          provider: cloudflare

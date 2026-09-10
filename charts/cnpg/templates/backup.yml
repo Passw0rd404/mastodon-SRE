@@ -6,6 +6,7 @@ kind: ObjectStore
 metadata:
   name: {{ $.Values.cluster.name }}-backup-store
   namespace: {{ $.Values.namespace }}
+  {{- include "mastodon.podLabels" .labels | nindent 2 }}
 spec:
   retentionPolicy: {{ .retentionPolicy | quote }}
 
@@ -37,9 +38,11 @@ spec:
         key: gcsCredentials
     {{- end }}
 
+    {{- if .wal.enabled }}
     wal:
       compression: {{ .wal.compression | quote }}
       maxParallel: {{ .wal.maxParallel }}
+    {{- end }}
 
     data:
       compression: {{ .data.compression | quote }}
@@ -48,22 +51,25 @@ spec:
 {{- end }}
 ---
 {{- if .Values.backup.enabled }}
+{{- with .Values.backup }}
 
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: {{ .Values.cluster.name }}-scheduled-backup
-  namespace: {{ .Values.namespace }}
+  name: {{ $.Values.cluster.name }}-scheduled-backup
+  namespace: {{ $.Values.namespace }}
+  {{- include "mastodon.podLabels" .labels | nindent 2 }}
 spec:
-  schedule: {{ .Values.backup.schedule | quote }}
+  schedule: {{ .schedule | quote }}
   backupOwnerReference: self
 
   cluster:
-    name: {{ .Values.cluster.name | quote }}
+    name: {{ $.Values.cluster.name | quote }}
 
   method: plugin
 
   pluginConfiguration:
     name: barman-cloud.cloudnative-pg.io
 
+{{- end }}
 {{- end }}

@@ -5,15 +5,36 @@ kind: Pooler
 metadata:
   name: mastodon-pooler-rw
   namespace: {{ $.Values.namespace | quote }}
+  {{- include "mastodon.podLabels" .podLabels | nindent 2 }}
 spec:
   cluster:
     name: {{ $.Values.cluster.name | quote }}
   instances: {{ .instances }}
   type: rw
   pgbouncer:
-    {{- toYaml .pgbouncer | nindent 4 }}
+    poolMode: {{ .pgbouncer.poolMode | quote }}
+    parameters:
+      max_client_conn: {{ .pgbouncer.parameters.maxClientConn | quote }}
+      default_pool_size: {{ .pgbouncer.parameters.defaultPoolSize | quote }}
+      reserve_pool_size: {{ .pgbouncer.parameters.reservePoolSize | quote }}
+      reserve_pool_timeout: {{ .pgbouncer.parameters.reservePoolTimeout | quote }}
+      server_idle_timeout: {{ .pgbouncer.parameters.serverIdleTimeout | quote }}
   template:
+    metadata:
+      labels:
+        cnpg.io/poolerName: mastodon-pooler-rw
+        {{- with .podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
+      {{- include "mastodon.nodeSelector" .nodeSelector | nindent 6 }}
+      {{- include "mastodon.tolerations" .tolerations | nindent 6 }}
+      {{- include "mastodon.affinity" .affinity | nindent 6 }}
+      {{- include "mastodon.topologySpreadConstraints" .topologySpreadConstraints | nindent 6 }}
       containers:
         - name: pgbouncer
           resources:
@@ -33,15 +54,36 @@ kind: Pooler
 metadata:
   name: mastodon-pooler-ro
   namespace: {{ $.Values.namespace | quote }}
+  {{- include "mastodon.podLabels" .podLabels | nindent 2 }}
 spec:
   cluster:
     name: {{ $.Values.cluster.name | quote }}
   instances: {{ .instances }}
   type: ro
   pgbouncer:
-    {{- toYaml .pgbouncer | nindent 4 }}
+    poolMode: {{ .pgbouncer.poolMode | quote }}
+    parameters:
+      max_client_conn: {{ .pgbouncer.parameters.maxClientConn | quote }}
+      default_pool_size: {{ .pgbouncer.parameters.defaultPoolSize | quote }}
+      reserve_pool_size: {{ .pgbouncer.parameters.reservePoolSize | quote }}
+      reserve_pool_timeout: {{ .pgbouncer.parameters.reservePoolTimeout | quote }}
+      server_idle_timeout: {{ .pgbouncer.parameters.serverIdleTimeout | quote }}
   template:
+    metadata:
+      labels:
+        cnpg.io/poolerName: mastodon-pooler-ro
+        {{- with .podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
+      {{- include "mastodon.nodeSelector" .nodeSelector | nindent 6 }}
+      {{- include "mastodon.tolerations" .tolerations | nindent 6 }}
+      {{- include "mastodon.affinity" .affinity | nindent 6 }}
+      {{- include "mastodon.topologySpreadConstraints" .topologySpreadConstraints | nindent 6 }}
       containers:
         - name: pgbouncer
           resources:

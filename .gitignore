@@ -1,3 +1,4 @@
+kind*
 # Helm dependency archives
 *.tgz
 

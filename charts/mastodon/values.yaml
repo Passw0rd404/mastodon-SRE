@@ -754,28 +754,16 @@ service:
 # Ingress configuration.
 # Disabled by default, it's recommended to use HTTPRoutes with the Gateway API.
 ingress:
-  enabled: false
+  enabled: true
 
-  annotations: {}
-    # For choosing an ingress ingressClassName is preferred over annotations
-    # kubernetes.io/ingress.class: nginx
-    #
-    # To automatically request TLS certificates use one of the following
-    # kubernetes.io/tls-acme: "true"
-    # cert-manager.io/cluster-issuer: "letsencrypt"
-    #
-    # ensure that NGINX's upload size matches Mastodon's
-    #   for the K8s ingress controller:
-    # nginx.ingress.kubernetes.io/proxy-body-size: 40m
-    #   for the NGINX ingress controller:
-    # nginx.org/client-max-body-size: 40m
-
-  className: ""
-
+  className: traefik
+  annotations:
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: cloudflare-resolver
   hosts:
-    - host: mastodon.local
+    - host: mastodon.yourdomain.tld
       paths:
-        - path: "/"
+        - path: /
           pathType: Prefix
   tls:
     - secretName: mastodon-tls
@@ -804,7 +792,7 @@ ingress:
 # HTTPRoute configuration for Gateway API.
 # This is the recommended method for handling ingress traffic.
 httproute:
-  enabled: true
+  enabled: false
 
   labels: {}
   annotations: {}
@@ -849,17 +837,17 @@ httproute:
 # Configuration for PostgreSQL.
 postgresql:
 
-  hostname: ""
+  hostname: mastodon-pooler-rw
   port: 5432
   database: mastodon
 
   # Database authentication.
-  username: mastodonn
+  username: mastodon
   password: ""
 
   # May also specify a secret for authentication. If set, takes precedence over
   # `username` and `password`.
-  existingSecret: ""
+  existingSecret: "mastodon-pg-app-creds"
   existingSecretKeys:
     username: username
     password: password
@@ -874,18 +862,18 @@ postgresql:
   # through the connection pooler. This is required for migrations to work
   # properly.
   direct:
-    hostname: ""
+    hostname: mastodon-rw
     port: 5432
-    database: ""
+    database: mastodon
 
   # Options for a read-only replica.
   # If enabled, existing default are used for these values as well.
   # For more information, please see:
   # https://docs.joinmastodon.org/admin/scaling/#read-replicas
   readReplica:
-    hostname: ""
+    hostname: mastodon-pooler-ro
     port: 5432
-    database: ""
+    database: mastodon
 
     # Read replica database authentication.
     username: ""
@@ -893,49 +881,88 @@ postgresql:
 
     # May also specify a secret for authentication. If set, takes precedence
     # over `username` and `password`
-    existingSecret: ""
+    existingSecret: mastodon-pg-app-creds
     existingSecretKeys:
       username: username
       password: password
 
 # Configuration for Redis.
+# redis:
+#   mode: standalone   # "standalone" or "sentinel" — one setting, applies to base + sidekiq + cache below
+#
+#   hostname: ""                              # used only when mode: standalone
+#   port: 6379                                 # used only when mode: standalone
+#   password: ""
+#   existingSecret: ""
+#   existingSecretKeys:
+#     password: auth
+#     sentinelPassword: sentinel-password       # used only when mode: sentinel
+#
+#   sentinels: ""                              # used only when mode: sentinel
+#   masterGroup: ""                             # used only when mode: sentinel
+#
+#   sidekiq:
+#     enabled: false
+#     hostname: ""                              # used only when mode: standalone
+#     port: 6379                                 # used only when mode: standalone
+#     password: ""
+#     existingSecret: ""
+#     existingSecretKeys:
+#       password: password
+#       sentinelPassword: sentinel-password       # used only when mode: sentinel
+#     sentinels: ""                              # used only when mode: sentinel
+#     masterGroup: ""                             # used only when mode: sentinel
+#
+#   cache:
+#     enabled: false
+#     hostname: ""                              # used only when mode: standalone
+#     port: 6379                                 # used only when mode: standalone
+#     password: ""
+#     existingSecret: ""
+#     existingSecretKeys:
+#       password: password
+#       sentinelPassword: sentinel-password       # used only when mode: sentinel
+#     sentinels: ""                              # used only when mode: sentinel
+#     masterGroup: ""                             # used only when mode: sentinel
+
+# Configuration for Redis.
 redis:
-  mode: standalone   # "standalone" or "sentinel" — one setting, applies to base + sidekiq + cache below
+  mode: sentinel
 
-  hostname: ""                              # used only when mode: standalone
-  port: 6379                                 # used only when mode: standalone
+  hostname: ""
+  port: 6379
   password: ""
-  existingSecret: ""
+  existingSecret: mastodon-redis-app-creds
   existingSecretKeys:
-    password: password
-    sentinelPassword: sentinel-password       # used only when mode: sentinel
+    password: auth
+    sentinelPassword: sentinel-password
 
-  sentinels: ""                              # used only when mode: sentinel
-  masterGroup: ""                             # used only when mode: sentinel
+  sentinels: "redis-mastodon-redis-ha:26379"
+  masterGroup: mastodon-app
 
   sidekiq:
-    enabled: false
-    hostname: ""                              # used only when mode: standalone
-    port: 6379                                 # used only when mode: standalone
+    enabled: true
+    hostname: ""
+    port: 6379
     password: ""
-    existingSecret: ""
+    existingSecret: mastodon-redis-app-creds
     existingSecretKeys:
-      password: password
-      sentinelPassword: sentinel-password       # used only when mode: sentinel
-    sentinels: ""                              # used only when mode: sentinel
-    masterGroup: ""                             # used only when mode: sentinel
+      password: auth
+      sentinelPassword: sentinel-password
+    sentinels: "redis-mastodon-redis-ha:26379"
+    masterGroup: mastodon-app
 
   cache:
-    enabled: false
-    hostname: ""                              # used only when mode: standalone
-    port: 6379                                 # used only when mode: standalone
+    enabled: true
+    hostname: ""
+    port: 6379
     password: ""
-    existingSecret: ""
+    existingSecret: mastodon-redis-cache-creds
     existingSecretKeys:
-      password: password
-      sentinelPassword: sentinel-password       # used only when mode: sentinel
-    sentinels: ""                              # used only when mode: sentinel
-    masterGroup: ""                             # used only when mode: sentinel
+      password: auth
+      sentinelPassword: sentinel-password
+    sentinels: "redis-cache-redis-ha:26379"
+    masterGroup: mastodon-cache
 
 # Configuration for Elasticsearch.
 #

@@ -7,6 +7,10 @@ cluster:
   primaryUpdateMethod: switchover
   affinity:
     podAntiAffinityType: preferred
+  nodeSelector: {}
+  tolerations: []
+  topologySpreadConstraints: []
+  podLabels: {}
 
   resources:
     requests:
@@ -27,23 +31,25 @@ cluster:
       shared_buffers: "512MB"
       effective_cache_size: "1GB"
       work_mem: "4MB"
-      shared_preload_libraries: "pg_stat_statements"
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: "all"
 
   bootstrap:
     existingSecret: mastodon-pg-app-creds
 
   monitoring:
     podMonitor:
-      enabled: true
+      enabled: false
 
 backup:
-  enabled: true
+  enabled: false
   provider: s3 # s3 | azure | gcs
   destinationPath: "s3://your-bucket/mastodon/" # format depends on provider — see comment below
   existingSecret: mastodon-pg-backup-creds
   retentionPolicy: "30d"
+  labels: {}
   wal:
-    enabled: true
+    enabled: false
     compression: gzip
     maxParallel: 4
   data:
@@ -62,6 +68,12 @@ backup:
 poolerRW:
   enabled: true
   instances: 1
+  podLabels: {}
+  podAnnotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
   pgbouncer:
     poolMode: transaction
     parameters:
@@ -81,6 +93,12 @@ poolerRW:
 poolerRO:
   enabled: true
   instances: 1
+  podLabels: {}
+  podAnnotations: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
   pgbouncer:
     poolMode: transaction
     parameters:
@@ -98,5 +116,5 @@ poolerRO:
       memory: "128Mi"
 
 fediscoverer:
-  enabled: true
+  enabled: false
   existingSecret: fediscoverer-pg-creds
