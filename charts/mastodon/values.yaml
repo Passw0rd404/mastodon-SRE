@@ -13,7 +13,7 @@ image:
   #   - latest:   Current official build
   #   - nightly:  Built every night at 2AM UTC
   #   - edge:     Most recent commit
-  tag: ""
+  tag: "v4.7.1"
 
   # Use `Always` when using mutable tags like `latest`, `edge` or `nightly`.
   pullPolicy: IfNotPresent
@@ -744,7 +744,7 @@ serviceAccount:
   annotations: {}
 
   # Custom name to use for the service account.
-  name: ""
+  name: "mastodon-app"
 
 # Service configuration.
 service:
@@ -928,14 +928,13 @@ postgresql:
 # Configuration for Redis.
 redis:
   mode: sentinel
-
   hostname: ""
   port: 6379
   password: ""
   existingSecret: mastodon-redis-app-creds
   existingSecretKeys:
-    password: auth
-    sentinelPassword: sentinel-password
+    password: password
+    sentinelPassword: sentinelPassword
 
   sentinels: "redis-mastodon-redis-ha:26379"
   masterGroup: mastodon-app
@@ -947,8 +946,8 @@ redis:
     password: ""
     existingSecret: mastodon-redis-app-creds
     existingSecretKeys:
-      password: auth
-      sentinelPassword: sentinel-password
+      password: password
+      sentinelPassword: sentinelPassword
     sentinels: "redis-mastodon-redis-ha:26379"
     masterGroup: mastodon-app
 
@@ -959,8 +958,8 @@ redis:
     password: ""
     existingSecret: mastodon-redis-cache-creds
     existingSecretKeys:
-      password: auth
-      sentinelPassword: sentinel-password
+      password: password
+      sentinelPassword: sentinelPassword
     sentinels: "redis-cache-redis-ha:26379"
     masterGroup: mastodon-cache
 

@@ -9,7 +9,7 @@ image:
   repository: ghcr.io/mastodon/fediscoverer
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest-66206f5"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -26,14 +26,14 @@ hooks:
 config:
 
   # URL that the service is accessible from
-  domain: localhost
+  domain: fediscoverer.local
 
   # Fediverse secret key base.
   secretKeyBase: ""
 
   # Existing secret that contains the secretKeyBase.
   # If set, takes precedence over the above value.
-  existingSecret: ""
+  existingSecret: "fediscoverer-secret-key-base"
   existingSecretKeys:
     secretKeyBase: secret-key-base
 
@@ -48,7 +48,7 @@ config:
   #     - fediscoverer_production_cache
   #     - fediscoverer_production_queue
   database:
-    host: localhost
+    hostname: mastodon-pooler-rw
     port: 5432
     password:
       secretKeyRef:
@@ -58,8 +58,8 @@ config:
     # In case the database is sitting behind a connection pooler, direct
     # connection information needs to be provided for automatic migrations.
     direct:
-      host: ""
-      port: 0
+      hostname: mastodon-rw
+      port: 5432
 
   # Whether to enable JSON logging
   jsonLogging: true
@@ -72,7 +72,7 @@ web:
   replicaCount: 1
 
   # Tags for the deployment object
-  tags: ""
+  tags: "latest-66206f5"
 
   # Additional annotations for web pods
   # These will be added in addition to global podAnnotations
@@ -101,7 +101,7 @@ jobs:
   replicaCount: 1
 
   # Tags for the deployment object
-  tags: ""
+  tags: "latest-66206f5"
 
   # Additional annotations for web pods
   # These will be added in addition to global podAnnotations

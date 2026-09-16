@@ -25,3 +25,6 @@ poolerRO:
           labelSelector:
             matchLabels:
               cnpg.io/poolerName: mastodon-pooler-ro
+fediscoverer:
+  enabled: true
+  existingSecret: fediscoverer-pg-creds

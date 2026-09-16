@@ -3,9 +3,12 @@ eck-elasticsearch:
 
   nodeSets:
     - name: default
-      count: 3
+      count: 1
       config:
         node.store.allow_mmap: false
+        xpack.watcher.enabled: false
+        xpack.graph.enabled: false
+        xpack.ml.enabled: false
       volumeClaimTemplates:
         - metadata:
             name: elasticsearch-data
@@ -17,23 +20,26 @@ eck-elasticsearch:
                 storage: 20Gi
             # storageClassName omitted — uses cluster default
       podTemplate:
+        metadata:
+          labels: {}
+          annotations: {}
         spec:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchLabels:
-                      elasticsearch.k8s.elastic.co/cluster-name: mastodon-es
-                  topologyKey: kubernetes.io/hostname
+          nodeSelector: {}
+          tolerations: []
+          affinity: {}
+          topologySpreadConstraints: []
           containers:
             - name: elasticsearch
+              env:
+                - name: ES_JAVA_OPTS
+                  value: "-Xms512m -Xmx512m"
               resources:
                 requests:
-                  cpu: "500m"
-                  memory: "2Gi"
+                  cpu: "250m"
+                  memory: "1Gi"
                 limits:
                   cpu: "1"
-                  memory: "3Gi"
+                  memory: "1.5Gi"
 
   http:
     tls:

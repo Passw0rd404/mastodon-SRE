@@ -194,6 +194,8 @@ If you don't want fediscoverer, set `fediscoverer.enabled: false` in
 Backup is `enabled: true` by default in `charts/cnpg/values.yaml`. **Either**
 create the backup secret, **or** set `backup.enabled: false` before install.
 
+
+
 ```yaml
 # secrets/mastodon-pg-backup-creds.yaml
 # Used by: charts/cnpg -> backup.existingSecret (provider: s3 by default)
@@ -243,7 +245,7 @@ No secret needed — the ECK operator manages its own internal auth/certs.
 
 ```bash
 helm dependency build ./charts/eck
-helm install mastodon-elasticsearch ./charts/eck -n mastodon
+helm install mastodon-eck ./charts/eck -n mastodon
 ```
 
 Check:
@@ -321,6 +323,21 @@ Apply secrets:
 kubectl apply -f secrets/mastodon-app-secrets.yaml
 kubectl apply -f secrets/mastodon-s3-creds.yaml   # only if using S3
 ```
+
+# Add upstream repo
+helm repo add mastodon https://mastodon.github.io/helm-charts
+helm repo update
+
+# See what's actually published, confirm fediscoverer exists there or not
+helm search repo mastodon
+
+# Install mastodon from upstream, using your existing values
+helm upgrade --install mastodon mastodon/mastodon -n mastodon \
+  -f values.yaml -f values-kind.yaml --timeout 15m
+
+# If fediscoverer shows up in that search, same pattern:
+helm upgrade --install fediscoverer mastodon/fediscoverer -n mastodon \
+  -f values.yaml -f values-kind.yaml --timeout 10m
 
 Set these values before install (put in a `values-mastodon.yaml`):
 ```yaml

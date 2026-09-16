@@ -1,3 +1,4 @@
+# values-cloud.yaml
 traefik:
   env:
     - name: CF_DNS_API_TOKEN
@@ -14,7 +15,16 @@ traefik:
   certificatesResolvers:
     cloudflare-resolver:
       acme:
-        email: you@yourdomain.tld
+        email: you@yourdomain.com
         storage: /data/acme.json
         dnsChallenge:
           provider: cloudflare
+
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+
+  service:
+    type: ClusterIP
+
+  deployment:
+    replicas: 1
