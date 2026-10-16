@@ -1,0 +1,24 @@
+name: check-r2
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/check-r2.sh
+      - .github/workflows/check-r2.yml
+jobs:
+  mastodon:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_MASTODON_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_MASTODON_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: scripts/check-r2.sh "${{ vars.R2_ENDPOINT }}" mastodon
+  monitoring:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_MONITORING_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_MONITORING_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: scripts/check-r2.sh "${{ vars.R2_ENDPOINT }}" sre-mimir sre-loki sre-tempo

@@ -1,11 +1,12 @@
-redisHA:
+redis:
   namespace: mastodon
   replicas: 3
   image:
     repository: valkey/valkey
     tag: "8.0.1-alpine"
   auth: true
-  existingSecret: mastodon-redis-app-creds # prerequisite secret, key name "auth"
+  authKey: password
+  existingSecret: mastodon-redis-app-creds
 
   sentinel:
     customCommand:
@@ -16,10 +17,11 @@ redisHA:
     quorum: 2
     masterGroupName: mastodon-app
     auth: true
+    authKey: sentinelPassword
     existingSecret: mastodon-redis-app-creds
 
   haproxy:
-    enabled: false # Mastodon speaks Sentinel directly
+    enabled: true
 
   persistentVolume:
     enabled: true
@@ -28,7 +30,7 @@ redisHA:
     accessModes:
       - ReadWriteOnce
 
-  hardAntiAffinity: false # true forces pods onto separate nodes with no fallback — can fail to schedule on small clusters
+  hardAntiAffinity: false
 
   topologySpreadConstraints:
     topologyKey: topology.kubernetes.io/zone

@@ -13,21 +13,22 @@ elasticsearch:
   enabled: true
 
   hostname: mastodon-eck-eck-elasticsearch-es-http
+
   port: 9200
-  tls: true
+  tls: false
 
   preset: single_node_cluster
 
-  username: elastic
-  existingSecret: mastodon-eck-eck-elasticsearch-es-elastic-user
+  existingSecret: mastodon-es-creds
   existingSecretKeys:
-    password: elastic
+    username: username
+    password: password
 
 mastodon:
   createAdmin:
     enabled: true
     username: admin
-    email: admin@mastodon.local
+    email: a26263842z@gmail.com
 
   smtp:
     domain: mastodon.local

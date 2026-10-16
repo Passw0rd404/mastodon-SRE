@@ -40,8 +40,3 @@ eck-elasticsearch:
                 limits:
                   cpu: "1"
                   memory: "1.5Gi"
-
-  http:
-    tls:
-      selfSignedCertificate:
-        disabled: false

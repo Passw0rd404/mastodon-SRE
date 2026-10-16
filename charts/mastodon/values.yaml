@@ -887,81 +887,61 @@ postgresql:
       password: password
 
 # Configuration for Redis.
-# redis:
-#   mode: standalone   # "standalone" or "sentinel" — one setting, applies to base + sidekiq + cache below
-#
-#   hostname: ""                              # used only when mode: standalone
-#   port: 6379                                 # used only when mode: standalone
-#   password: ""
-#   existingSecret: ""
-#   existingSecretKeys:
-#     password: auth
-#     sentinelPassword: sentinel-password       # used only when mode: sentinel
-#
-#   sentinels: ""                              # used only when mode: sentinel
-#   masterGroup: ""                             # used only when mode: sentinel
-#
-#   sidekiq:
-#     enabled: false
-#     hostname: ""                              # used only when mode: standalone
-#     port: 6379                                 # used only when mode: standalone
-#     password: ""
-#     existingSecret: ""
-#     existingSecretKeys:
-#       password: password
-#       sentinelPassword: sentinel-password       # used only when mode: sentinel
-#     sentinels: ""                              # used only when mode: sentinel
-#     masterGroup: ""                             # used only when mode: sentinel
-#
-#   cache:
-#     enabled: false
-#     hostname: ""                              # used only when mode: standalone
-#     port: 6379                                 # used only when mode: standalone
-#     password: ""
-#     existingSecret: ""
-#     existingSecretKeys:
-#       password: password
-#       sentinelPassword: sentinel-password       # used only when mode: sentinel
-#     sentinels: ""                              # used only when mode: sentinel
-#     masterGroup: ""                             # used only when mode: sentinel
-
-# Configuration for Redis.
 redis:
-  mode: sentinel
-  hostname: ""
+  hostname: mastodon-redis-ha-haproxy
   port: 6379
-  password: ""
   existingSecret: mastodon-redis-app-creds
   existingSecretKeys:
     password: password
-    sentinelPassword: sentinelPassword
-
-  sentinels: "redis-mastodon-redis-ha:26379"
-  masterGroup: mastodon-app
 
   sidekiq:
-    enabled: true
-    hostname: ""
-    port: 6379
-    password: ""
-    existingSecret: mastodon-redis-app-creds
-    existingSecretKeys:
-      password: password
-      sentinelPassword: sentinelPassword
-    sentinels: "redis-mastodon-redis-ha:26379"
-    masterGroup: mastodon-app
+    enabled: false   # Sidekiq shares the app instance, not a separate one
 
   cache:
     enabled: true
-    hostname: ""
+    hostname: mastodon-redis-cache-haproxy
     port: 6379
-    password: ""
     existingSecret: mastodon-redis-cache-creds
     existingSecretKeys:
       password: password
-      sentinelPassword: sentinelPassword
-    sentinels: "redis-cache-redis-ha:26379"
-    masterGroup: mastodon-cache
+
+# # Configuration for Redis.
+# redis:
+#   mode: sentinel
+#   hostname: ""
+#   port: 6379
+#   password: ""
+#   existingSecret: mastodon-redis-app-creds
+#   existingSecretKeys:
+#     password: password
+#     sentinelPassword: sentinelPassword
+#
+#   sentinels: "redis-mastodon-redis-ha:26379"
+#   masterGroup: mastodon-app
+#
+#   sidekiq:
+#     enabled: true
+#     hostname: ""
+#     port: 6379
+#     password: ""
+#     existingSecret: mastodon-redis-app-creds
+#     existingSecretKeys:
+#       password: password
+#       sentinelPassword: sentinelPassword
+#     sentinels: "redis-mastodon-redis-ha:26379"
+#     masterGroup: mastodon-app
+#
+#   cache:
+#     enabled: true
+#     hostname: ""
+#     port: 6379
+#     password: ""
+#     existingSecret: mastodon-redis-cache-creds
+#     existingSecretKeys:
+#       password: password
+#       sentinelPassword: sentinelPassword
+#     sentinels: "redis-cache-redis-ha:26379"
+#     masterGroup: mastodon-cache
 
 # Configuration for Elasticsearch.
 #

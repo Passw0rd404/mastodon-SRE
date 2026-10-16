@@ -1,12 +1,5 @@
-
 eck-elasticsearch:
-  nodeSets:
-      podTemplate:
-        spec:
-          affinity:
-            podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - labelSelector:
-                    matchLabels:
-                      elasticsearch.k8s.elastic.co/cluster-name: mastodon-es
-                  topologyKey: kubernetes.io/hostname
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
