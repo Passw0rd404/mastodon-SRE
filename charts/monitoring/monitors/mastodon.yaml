@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: mastodon-rails
+  namespace: mastodon
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mastodon
+      app.kubernetes.io/part-of: rails
+  podMetricsEndpoints:
+    - portNumber: 9394
+      path: /metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: mastodon-streaming
+  namespace: mastodon
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mastodon
+      app.kubernetes.io/component: streaming
+  podMetricsEndpoints:
+    - port: streaming
+      path: /metrics

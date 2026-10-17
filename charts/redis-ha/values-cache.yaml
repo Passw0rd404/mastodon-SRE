@@ -2,6 +2,11 @@ redis:
   existingSecret: mastodon-redis-cache-creds
   authKey: password
 
+  exporter:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
   sentinel:
     masterGroupName: mastodon-cache
     auth: true

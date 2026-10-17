@@ -8,6 +8,13 @@ redis:
   authKey: password
   existingSecret: mastodon-redis-app-creds
 
+  exporter:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+    extraArgs:
+      check-single-keys: "queue:default,queue:push,queue:pull,queue:ingress,queue:mailers,queue:scheduler,schedule,retry,dead"
+
   sentinel:
     customCommand:
       - valkey-server
@@ -43,9 +50,6 @@ redis:
     limits:
       cpu: "1"
       memory: "1Gi"
-
-  exporter:
-    enabled: false
 
   redis:
     config:

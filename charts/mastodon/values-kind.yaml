@@ -65,3 +65,7 @@ mastodon:
     existingSecretKeys:
       accessKeyId: access-key-id
       secretAccessKey: secret-access-key
+
+  metrics:
+    prometheus:
+      enabled: true

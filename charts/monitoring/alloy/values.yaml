@@ -1,6 +1,6 @@
 controller:
   type: deployment
-  replicas: 1
+  replicas: 2
 
 serviceMonitor:
   enabled: true

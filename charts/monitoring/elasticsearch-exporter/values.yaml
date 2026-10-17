@@ -1,0 +1,21 @@
+fullnameOverride: elasticsearch-exporter
+
+es:
+  uri: http://mastodon-eck-eck-elasticsearch-es-http.mastodon.svc.cluster.local:9200
+  all: true
+
+extraEnvSecrets:
+  ES_USERNAME:
+    secret: es-exporter-creds
+    key: username
+  ES_PASSWORD:
+    secret: es-exporter-creds
+    key: password
+
+serviceMonitor:
+  enabled: true
+
+resources:
+  requests:
+    cpu: 25m
+    memory: 64Mi

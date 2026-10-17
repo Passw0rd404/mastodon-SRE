@@ -42,3 +42,8 @@ sidecar:
     label: grafana_dashboard
     labelValue: "1"
     searchNamespace: ALL
+
+initChownData:
+  enabled: false
+deploymentStrategy:
+  type: Recreate
