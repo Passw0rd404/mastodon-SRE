@@ -1,0 +1,13 @@
+fullnameOverride: sentinel-exporter-app
+redisAddress: redis://mastodon-redis-ha.mastodon.svc.cluster.local:26379
+auth:
+  enabled: true
+  secret:
+    name: sentinel-app-creds
+    key: password
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi

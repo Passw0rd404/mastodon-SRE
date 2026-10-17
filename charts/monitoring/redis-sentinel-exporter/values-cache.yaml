@@ -1,0 +1,7 @@
+fullnameOverride: sentinel-exporter-cache
+redisAddress: redis://mastodon-redis-cache.mastodon.svc.cluster.local:26379
+auth:
+  enabled: true
+  secret:
+    name: sentinel-cache-creds
+    key: password
