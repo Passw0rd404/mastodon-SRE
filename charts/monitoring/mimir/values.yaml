@@ -1,0 +1,42 @@
+# Shared settings (any cluster). Endpoint and bucket live in values-<env>.yaml.
+minio:
+  enabled: false
+
+global:
+  extraEnv:
+    - name: R2_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: access-key-id}
+    - name: R2_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: secret-access-key}
+
+mimir:
+  structuredConfig:
+    blocks_storage:
+      backend: s3
+      storage_prefix: blocks
+      s3:
+        region: auto
+        insecure: false
+        access_key_id: "${R2_ACCESS_KEY_ID}"
+        secret_access_key: "${R2_SECRET_ACCESS_KEY}"
+    ruler_storage:
+      backend: s3
+      storage_prefix: ruler
+      s3:
+        region: auto
+        insecure: false
+        access_key_id: "${R2_ACCESS_KEY_ID}"
+        secret_access_key: "${R2_SECRET_ACCESS_KEY}"
+    alertmanager_storage:
+      backend: s3
+      storage_prefix: alertmanager
+      s3:
+        region: auto
+        insecure: false
+        access_key_id: "${R2_ACCESS_KEY_ID}"
+        secret_access_key: "${R2_SECRET_ACCESS_KEY}"
+    ingest_storage:
+      kafka:
+        auto_create_topic_default_partitions: 10

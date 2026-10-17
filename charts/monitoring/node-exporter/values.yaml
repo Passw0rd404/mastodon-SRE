@@ -1,0 +1,5 @@
+fullnameOverride: node-exporter
+prometheus:
+  monitor:
+    enabled: true
+    jobLabel: app.kubernetes.io/instance

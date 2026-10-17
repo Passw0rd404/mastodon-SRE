@@ -1,0 +1,97 @@
+controller:
+  type: deployment
+  replicas: 1
+
+serviceMonitor:
+  enabled: true
+
+# Kubelet certs are self-signed on kind. Override per environment.
+kubeletInsecureTLS: false
+
+alloy:
+  clustering:
+    enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  configMap:
+    create: true
+    content: |
+      prometheus.remote_write "mimir" {
+        endpoint {
+          url     = sys.env("MIMIR_URL")
+          headers = { "X-Scope-OrgID" = "sre" }
+        }
+        external_labels = { cluster = sys.env("CLUSTER_NAME") }
+      }
+
+      prometheus.operator.servicemonitors "all" {
+        forward_to = [prometheus.remote_write.mimir.receiver]
+        scrape {
+          default_scrape_interval = "30s"
+        }
+        clustering {
+          enabled = true
+        }
+      }
+
+      prometheus.operator.podmonitors "all" {
+        forward_to = [prometheus.remote_write.mimir.receiver]
+        scrape {
+          default_scrape_interval = "30s"
+        }
+        clustering {
+          enabled = true
+        }
+      }
+
+      discovery.kubernetes "nodes" {
+        role = "node"
+      }
+
+      discovery.relabel "nodes" {
+        targets = discovery.kubernetes.nodes.targets
+        rule {
+          source_labels = ["__meta_kubernetes_node_name"]
+          target_label  = "node"
+        }
+      }
+
+      prometheus.scrape "kubelet" {
+        targets         = discovery.relabel.nodes.output
+        forward_to      = [prometheus.remote_write.mimir.receiver]
+        job_name        = "kubelet"
+        scheme          = "https"
+        metrics_path    = "/metrics"
+        scrape_interval = "30s"
+        authorization {
+          type             = "Bearer"
+          credentials_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        }
+        tls_config {
+          insecure_skip_verify = {{ .Values.kubeletInsecureTLS }}
+        }
+        clustering {
+          enabled = true
+        }
+      }
+
+      prometheus.scrape "cadvisor" {
+        targets         = discovery.relabel.nodes.output
+        forward_to      = [prometheus.remote_write.mimir.receiver]
+        job_name        = "cadvisor"
+        scheme          = "https"
+        metrics_path    = "/metrics/cadvisor"
+        scrape_interval = "30s"
+        authorization {
+          type             = "Bearer"
+          credentials_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        }
+        tls_config {
+          insecure_skip_verify = {{ .Values.kubeletInsecureTLS }}
+        }
+        clustering {
+          enabled = true
+        }
+      }

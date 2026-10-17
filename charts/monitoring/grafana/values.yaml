@@ -1,0 +1,44 @@
+admin:
+  existingSecret: grafana-admin
+  userKey: admin-user
+  passwordKey: admin-password
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+
+serviceMonitor:
+  enabled: true
+
+grafana.ini:
+  feature_toggles:
+    provisioning: true
+    kubernetesDashboards: true
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Mimir
+        uid: mimir
+        type: prometheus
+        access: proxy
+        url: http://mimir-gateway.monitoring.svc.cluster.local/prometheus
+        isDefault: true
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+          prometheusType: Mimir
+        secureJsonData:
+          httpHeaderValue1: sre
+
+sidecar:
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+    searchNamespace: ALL

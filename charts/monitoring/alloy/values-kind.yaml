@@ -1,0 +1,8 @@
+kubeletInsecureTLS: true
+
+alloy:
+  extraEnv:
+    - name: MIMIR_URL
+      value: http://mimir-gateway.monitoring.svc.cluster.local/api/v1/push
+    - name: CLUSTER_NAME
+      value: kind-mastodon

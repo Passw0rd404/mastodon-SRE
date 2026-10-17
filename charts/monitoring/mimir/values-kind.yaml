@@ -1,0 +1,14 @@
+mimir:
+  structuredConfig:
+    blocks_storage:
+      s3:
+        endpoint: 1ca37da478719196fd809bc2a62f57b0.r2.cloudflarestorage.com
+        bucket_name: sre-mimir
+    ruler_storage:
+      s3:
+        endpoint: 1ca37da478719196fd809bc2a62f57b0.r2.cloudflarestorage.com
+        bucket_name: sre-mimir
+    alertmanager_storage:
+      s3:
+        endpoint: 1ca37da478719196fd809bc2a62f57b0.r2.cloudflarestorage.com
+        bucket_name: sre-mimir
