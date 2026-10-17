@@ -1,3 +1,4 @@
+
 {
   "apiVersion": "dashboard.grafana.app/v1beta1",
   "kind": "Dashboard",
@@ -16,7 +17,7 @@
           "enable": true,
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations \u0026 Alerts",
+          "name": "Annotations & Alerts",
           "type": "dashboard"
         }
       ]
@@ -33,44 +34,25 @@
         },
         "fieldConfig": {
           "defaults": {
+            "unit": "percent",
+            "min": 0,
             "color": {
               "mode": "palette-classic"
             },
             "custom": {
-              "axisBorderShow": false,
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "barWidthFactor": 0.6,
               "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "insertNulls": false,
               "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
+              "lineWidth": 2,
+              "fillOpacity": 15,
+              "showPoints": "never",
+              "axisPlacement": "auto",
               "scaleDistribution": {
                 "type": "linear"
               },
-              "showPoints": "auto",
-              "showValues": false,
-              "spanNulls": false,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
               "thresholdsStyle": {
-                "mode": "off"
+                "mode": "line"
               }
             },
-            "mappings": [],
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -79,8 +61,12 @@
                   "value": 0
                 },
                 {
+                  "color": "orange",
+                  "value": 70
+                },
+                {
                   "color": "red",
-                  "value": 80
+                  "value": 90
                 }
               ]
             }
@@ -96,15 +82,18 @@
         "id": 1,
         "options": {
           "legend": {
-            "calcs": [],
+            "calcs": [
+              "lastNotNull",
+              "max"
+            ],
             "displayMode": "list",
             "placement": "bottom",
             "showLegend": true
           },
           "tooltip": {
             "hideZeros": false,
-            "mode": "single",
-            "sort": "none"
+            "mode": "multi",
+            "sort": "desc"
           }
         },
         "pluginVersion": "12.3.1",
@@ -114,20 +103,24 @@
               "type": "prometheus",
               "uid": "mimir"
             },
-            "editorMode": "builder",
-            "expr": "rate(alloy_resources_process_cpu_seconds_total[$__rate_interval])",
-            "legendFormat": "__auto",
+            "editorMode": "code",
+            "expr": "rate(alloy_resources_process_cpu_seconds_total[5m]) * 100",
+            "legendFormat": "{{instance}}",
             "range": true,
             "refId": "A"
           }
         ],
-        "title": "New panel",
+        "title": "Alloy Process CPU Usage",
         "type": "timeseries"
       }
     ],
     "preload": false,
     "schemaVersion": 42,
-    "tags": [],
+    "tags": [
+      "alloy",
+      "cpu",
+      "monitoring"
+    ],
     "templating": {
       "list": []
     },
@@ -137,6 +130,6 @@
     },
     "timepicker": {},
     "timezone": "browser",
-    "title": "test"
+    "title": "Alloy Resource Monitoring"
   }
 }
