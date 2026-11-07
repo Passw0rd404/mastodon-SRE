@@ -1,0 +1,404 @@
+{
+  "uid": "mastodon-business",
+  "title": "Mastodon / Business",
+  "description": "Community size, growth, engagement and moderation load, from the Mastodon database and live usage metrics.",
+  "tags": ["mastodon", "business", "community"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "refresh": "1m",
+  "time": { "from": "now-7d", "to": "now" },
+
+  "templating": {
+    "list": [
+      {
+        "name": "ds_mimir",
+        "label": "Mimir",
+        "type": "datasource",
+        "query": "prometheus",
+        "refresh": 1,
+        "hide": 0
+      }
+    ]
+  },
+
+  "panels": [
+
+    {
+      "id": 90,
+      "type": "text",
+      "title": "About this dashboard",
+      "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+      "options": {
+        "mode": "markdown",
+        "content": "Community numbers come from SQL queries that CloudNativePG runs read-only on the Mastodon database (metrics named `cnpg_mastodon_*`). Live usage comes from Mastodon's own metrics. \"Active\" means signed in within the window. These values come only from the Postgres primary, so expect a short gap during a failover."
+      }
+    },
+
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Registered users",
+      "description": "Local accounts that are not disabled.",
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_enabled_total)" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "New signups (24h)",
+      "description": "Accounts created in the last 24 hours.",
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_signups_24h)" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Active users (24h)",
+      "description": "Local users who signed in during the last 24 hours.",
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_active_24h)" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Active users (7 days)",
+      "description": "Local users who signed in during the last 7 days.",
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_active_7d)" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Posts by local users (24h)",
+      "description": "Statuses created by local accounts in the last 24 hours.",
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_content_local_statuses_24h)" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Open moderation reports",
+      "description": "Reports that no moderator has handled yet.",
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 3 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_moderation_open_reports)" }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 1 },
+              { "color": "red", "value": 10 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+
+    {
+      "id": 10,
+      "type": "row",
+      "title": "Growth and engagement",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "timeseries",
+      "title": "Registered users over time",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_enabled_total)", "legendFormat": "registered users" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "New signups (rolling 24h)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_signups_24h)", "legendFormat": "signups in last 24h" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Active users (24h and 7 days)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_active_24h)", "legendFormat": "active 24h" },
+        { "refId": "B", "expr": "max(cnpg_mastodon_users_active_7d)", "legendFormat": "active 7 days" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "Engagement: share of users who are active",
+      "description": "Active users divided by registered users. A healthy small community often sits well above 20% weekly.",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(cnpg_mastodon_users_active_24h) / max(cnpg_mastodon_users_enabled_total)",
+          "legendFormat": "daily"
+        },
+        {
+          "refId": "B",
+          "expr": "max(cnpg_mastodon_users_active_7d) / max(cnpg_mastodon_users_enabled_total)",
+          "legendFormat": "weekly"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "percentunit", "min": 0, "max": 1, "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Posts and posters (rolling 24h)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_content_local_statuses_24h)", "legendFormat": "posts" },
+        { "refId": "B", "expr": "max(cnpg_mastodon_content_local_posters_24h)", "legendFormat": "people who posted" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Accounts that have not confirmed their email",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 24 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_users_unconfirmed)", "legendFormat": "unconfirmed" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+
+    {
+      "id": 20,
+      "type": "row",
+      "title": "Live usage",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 32 },
+      "panels": []
+    },
+    {
+      "id": 21,
+      "type": "timeseries",
+      "title": "People connected to live streaming",
+      "description": "Open streaming connections, a good proxy for people using the app right now.",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 33 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(connected_clients{job=\"mastodon/mastodon-streaming\"})",
+          "legendFormat": "clients"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 22,
+      "type": "timeseries",
+      "title": "Web requests per second",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 33 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(ruby_http_requests_total{job=\"mastodon/mastodon-rails\"}[$__rate_interval]))",
+          "legendFormat": "requests/s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 23,
+      "type": "timeseries",
+      "title": "Background jobs processed per second",
+      "description": "Federation, notifications, mail and scheduled work. Rises with activity.",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 33 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(sidekiq_jobs_total[$__rate_interval]))",
+          "legendFormat": "jobs/s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "ops", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+
+    {
+      "id": 30,
+      "type": "row",
+      "title": "Moderation",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 41 },
+      "panels": []
+    },
+    {
+      "id": 31,
+      "type": "timeseries",
+      "title": "Open moderation reports over time",
+      "gridPos": { "h": 7, "w": 24, "x": 0, "y": 42 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        { "refId": "A", "expr": "max(cnpg_mastodon_moderation_open_reports)", "legendFormat": "open reports" }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    }
+
+  ]
+}

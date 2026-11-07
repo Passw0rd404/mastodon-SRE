@@ -1,2 +1,2 @@
 operator:
-  scanJobsConcurrentLimit: 1
+  scanJobsConcurrentLimit: 2

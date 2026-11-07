@@ -10,9 +10,14 @@ serviceMonitor:
 operator:
   builtInTrivyServer: true
   scanJobsConcurrentLimit: 3
-  scanJobTimeout: 10m
+  scanJobTimeout: 30m
   vulnerabilityScannerScanOnlyCurrentRevisions: true
   configAuditScannerScanOnlyCurrentRevisions: true
 
 trivy:
   ignoreUnfixed: true
+  timeout: 25m
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi

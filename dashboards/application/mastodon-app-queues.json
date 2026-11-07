@@ -1,41 +1,971 @@
 {
-"uid":"mastodon-app-queues",
-"title":"Mastodon / Application and queues",
-"tags":["mastodon","application","sidekiq"],
-"timezone":"browser",
-"schemaVersion":39,
-"version":1,
-"editable":true,
-"refresh":"30s",
-"time":{"from":"now-6h","to":"now"},
-"templating":{"list":[
-{"name":"ds_mimir","label":"Mimir","type":"datasource","query":"prometheus","refresh":1,"hide":0},
-{"name":"ds_loki","label":"Loki","type":"datasource","query":"loki","refresh":1,"hide":0},
-{"name":"cluster","label":"Cluster","type":"query","datasource":{"type":"prometheus","uid":"${ds_mimir}"},"definition":"label_values(sidekiq_queue_backlog, cluster)","query":{"qryType":1,"query":"label_values(sidekiq_queue_backlog, cluster)","refId":"PrometheusVariableQueryEditor-VariableQuery"},"refresh":2,"sort":1,"includeAll":false,"multi":false},
-{"name":"queue","label":"Queue","type":"query","datasource":{"type":"prometheus","uid":"${ds_mimir}"},"definition":"label_values(sidekiq_queue_backlog{cluster=\"$cluster\"}, queue)","query":{"qryType":1,"query":"label_values(sidekiq_queue_backlog{cluster=\"$cluster\"}, queue)","refId":"PrometheusVariableQueryEditor-VariableQuery"},"refresh":2,"sort":1,"includeAll":true,"multi":true,"allValue":".*"}
-]},
-"panels":[
-{"id":1,"type":"stat","title":"Web requests/s","gridPos":{"h":4,"w":4,"x":0,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(rate(ruby_http_requests_total{cluster=\"$cluster\",job=\"mastodon/mastodon-rails\"}[$__rate_interval]))"}],"fieldConfig":{"defaults":{"unit":"reqps"},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":2,"type":"stat","title":"Sidekiq threads busy","gridPos":{"h":4,"w":4,"x":4,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(sidekiq_process_busy{cluster=\"$cluster\"}) / sum(sidekiq_process_concurrency{cluster=\"$cluster\"})"}],"fieldConfig":{"defaults":{"unit":"percentunit","min":0,"max":1,"thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"orange","value":0.7},{"color":"red","value":0.9}]}},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":3,"type":"stat","title":"Queued jobs (all queues)","gridPos":{"h":4,"w":4,"x":8,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(sidekiq_queue_backlog{cluster=\"$cluster\"})"}],"fieldConfig":{"defaults":{"unit":"short","thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"orange","value":100},{"color":"red","value":1000}]}},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":4,"type":"stat","title":"Oldest queue latency","gridPos":{"h":4,"w":4,"x":12,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"max(sidekiq_queue_latency_seconds{cluster=\"$cluster\"})"}],"fieldConfig":{"defaults":{"unit":"s","thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"orange","value":30},{"color":"red","value":300}]}},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":5,"type":"stat","title":"Retry set size","gridPos":{"h":4,"w":4,"x":16,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"max(sidekiq_stats_retry_size{cluster=\"$cluster\"})"}],"fieldConfig":{"defaults":{"unit":"short","thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"orange","value":1},{"color":"red","value":100}]}},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":6,"type":"stat","title":"Dead set size","gridPos":{"h":4,"w":4,"x":20,"y":0},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"max(sidekiq_stats_dead_size{cluster=\"$cluster\"})"}],"fieldConfig":{"defaults":{"unit":"short","thresholds":{"mode":"absolute","steps":[{"color":"green","value":null},{"color":"red","value":1}]}},"overrides":[]},"options":{"colorMode":"value","graphMode":"area","reduceOptions":{"calcs":["lastNotNull"]}}},
-{"id":10,"type":"row","title":"Sidekiq: queues and jobs","collapsed":false,"gridPos":{"h":1,"w":24,"x":0,"y":4},"panels":[]},
-{"id":11,"type":"timeseries","title":"Queue backlog","gridPos":{"h":8,"w":12,"x":0,"y":5},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum by (queue) (sidekiq_queue_backlog{cluster=\"$cluster\",queue=~\"$queue\"})","legendFormat":"{{queue}}"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"table","placement":"bottom","calcs":["lastNotNull","max"]},"tooltip":{"mode":"multi"}}},
-{"id":12,"type":"timeseries","title":"Queue latency","gridPos":{"h":8,"w":12,"x":12,"y":5},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"max by (queue) (sidekiq_queue_latency_seconds{cluster=\"$cluster\",queue=~\"$queue\"})","legendFormat":"{{queue}}"}],"fieldConfig":{"defaults":{"unit":"s","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"table","placement":"bottom","calcs":["lastNotNull","max"]},"tooltip":{"mode":"multi"}}},
-{"id":13,"type":"timeseries","title":"Jobs processed per second","gridPos":{"h":8,"w":12,"x":0,"y":13},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum by (queue) (rate(sidekiq_jobs_total{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval]))","legendFormat":"{{queue}}"}],"fieldConfig":{"defaults":{"unit":"ops","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"table","placement":"bottom","calcs":["lastNotNull","mean"]},"tooltip":{"mode":"multi"}}},
-{"id":14,"type":"timeseries","title":"Average job duration (top 10 jobs)","gridPos":{"h":8,"w":12,"x":12,"y":13},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"topk(10, sum by (job_name) (rate(sidekiq_job_duration_seconds_sum{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval])) / sum by (job_name) (rate(sidekiq_job_duration_seconds_count{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval])))","legendFormat":"{{job_name}}"}],"fieldConfig":{"defaults":{"unit":"s","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"table","placement":"bottom","calcs":["lastNotNull","max"]},"tooltip":{"mode":"multi"}}},
-{"id":15,"type":"timeseries","title":"Sidekiq threads: busy vs capacity","gridPos":{"h":8,"w":12,"x":0,"y":21},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(sidekiq_process_busy{cluster=\"$cluster\"})","legendFormat":"busy"},{"refId":"B","expr":"sum(sidekiq_process_concurrency{cluster=\"$cluster\"})","legendFormat":"capacity"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":16,"type":"timeseries","title":"Failed jobs per second","gridPos":{"h":8,"w":12,"x":12,"y":21},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"max(rate(sidekiq_stats_failed{cluster=\"$cluster\"}[$__rate_interval]))","legendFormat":"failed/s"}],"fieldConfig":{"defaults":{"unit":"ops","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":20,"type":"row","title":"Web (Puma), database pool and streaming","collapsed":false,"gridPos":{"h":1,"w":24,"x":0,"y":29},"panels":[]},
-{"id":21,"type":"timeseries","title":"Web requests per second by pod","gridPos":{"h":8,"w":8,"x":0,"y":30},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum by (pod) (rate(ruby_http_requests_total{cluster=\"$cluster\",job=\"mastodon/mastodon-rails\"}[$__rate_interval]))","legendFormat":"{{pod}}"}],"fieldConfig":{"defaults":{"unit":"reqps","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":22,"type":"timeseries","title":"Puma request backlog","gridPos":{"h":8,"w":8,"x":8,"y":30},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(ruby_puma_request_backlog{cluster=\"$cluster\"})","legendFormat":"waiting requests"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":23,"type":"timeseries","title":"Puma threads","gridPos":{"h":8,"w":8,"x":16,"y":30},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(ruby_puma_running_threads{cluster=\"$cluster\"})","legendFormat":"running"},{"refId":"B","expr":"sum(ruby_puma_max_threads{cluster=\"$cluster\"})","legendFormat":"max"},{"refId":"C","expr":"sum(ruby_puma_thread_pool_capacity{cluster=\"$cluster\"})","legendFormat":"free capacity"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":24,"type":"timeseries","title":"Database connection pool (busy and waiting)","gridPos":{"h":8,"w":12,"x":0,"y":38},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(ruby_active_record_connection_pool_busy{cluster=\"$cluster\"})","legendFormat":"web busy"},{"refId":"B","expr":"sum(ruby_active_record_connection_pool_waiting{cluster=\"$cluster\"})","legendFormat":"web waiting"},{"refId":"C","expr":"sum(active_record_connection_pool_busy{cluster=\"$cluster\"})","legendFormat":"sidekiq busy"},{"refId":"D","expr":"sum(active_record_connection_pool_waiting{cluster=\"$cluster\"})","legendFormat":"sidekiq waiting"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":25,"type":"timeseries","title":"Streaming: connected clients","gridPos":{"h":8,"w":6,"x":12,"y":38},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(connected_clients{cluster=\"$cluster\",job=\"mastodon/mastodon-streaming\"})","legendFormat":"clients"}],"fieldConfig":{"defaults":{"unit":"short","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":26,"type":"timeseries","title":"Streaming: messages sent per second","gridPos":{"h":8,"w":6,"x":18,"y":38},"datasource":{"type":"prometheus","uid":"${ds_mimir}"},"targets":[{"refId":"A","expr":"sum(rate(messages_sent_total{cluster=\"$cluster\",job=\"mastodon/mastodon-streaming\"}[$__rate_interval]))","legendFormat":"messages/s"}],"fieldConfig":{"defaults":{"unit":"ops","custom":{"fillOpacity":10}},"overrides":[]},"options":{"legend":{"displayMode":"list","placement":"bottom"},"tooltip":{"mode":"multi"}}},
-{"id":30,"type":"row","title":"Errors in logs","collapsed":false,"gridPos":{"h":1,"w":24,"x":0,"y":46},"panels":[]},
-{"id":31,"type":"logs","title":"Mastodon errors (web and Sidekiq)","gridPos":{"h":10,"w":24,"x":0,"y":47},"datasource":{"type":"loki","uid":"${ds_loki}"},"targets":[{"refId":"A","expr":"{cluster=\"$cluster\",namespace=\"mastodon\",level=~\"error|fatal\"}","queryType":"range"}],"options":{"showTime":true,"wrapLogMessage":true,"sortOrder":"Descending","enableLogDetails":true}}
-]
+  "uid": "mastodon-app-queues",
+  "title": "Mastodon / Application and queues",
+  "tags": [
+    "mastodon",
+    "application",
+    "sidekiq"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "ds_mimir",
+        "label": "Mimir",
+        "type": "datasource",
+        "query": "prometheus",
+        "refresh": 1,
+        "hide": 0
+      },
+      {
+        "name": "ds_loki",
+        "label": "Loki",
+        "type": "datasource",
+        "query": "loki",
+        "refresh": 1,
+        "hide": 0
+      },
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(sidekiq_queue_backlog, cluster)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(sidekiq_queue_backlog, cluster)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": false,
+        "multi": false
+      },
+      {
+        "name": "queue",
+        "label": "Queue",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(sidekiq_queue_backlog{cluster=\"$cluster\"}, queue)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(sidekiq_queue_backlog{cluster=\"$cluster\"}, queue)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Web requests/s",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(ruby_http_requests_total{cluster=\"$cluster\",job=\"mastodon/mastodon-rails\"}[$__rate_interval]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Sidekiq threads busy",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(sidekiq_process_busy{cluster=\"$cluster\"}) / sum(sidekiq_process_concurrency{cluster=\"$cluster\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.7
+              },
+              {
+                "color": "red",
+                "value": 0.9
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Queued jobs (all queues)",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(sidekiq_queue_backlog{cluster=\"$cluster\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 1000
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Oldest queue latency",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(sidekiq_queue_latency_seconds{cluster=\"$cluster\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 300
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Retry set size",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(sidekiq_stats_retry_size{cluster=\"$cluster\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Dead set size",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(sidekiq_stats_dead_size{cluster=\"$cluster\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": "row",
+      "title": "Sidekiq: queues and jobs",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 4
+      },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "timeseries",
+      "title": "Queue backlog",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (queue) (sidekiq_queue_backlog{cluster=\"$cluster\",queue=~\"$queue\"})",
+          "legendFormat": "{{queue}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "Queue latency",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max by (queue) (sidekiq_queue_latency_seconds{cluster=\"$cluster\",queue=~\"$queue\"})",
+          "legendFormat": "{{queue}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Jobs processed per second",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (queue) (rate(sidekiq_jobs_total{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval]))",
+          "legendFormat": "{{queue}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "mean"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 14,
+      "type": "timeseries",
+      "title": "Average job duration (top 10 jobs)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "topk(10, sum by (job_name) (rate(sidekiq_job_duration_seconds_sum{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval])) / sum by (job_name) (rate(sidekiq_job_duration_seconds_count{cluster=\"$cluster\",queue=~\"$queue\"}[$__rate_interval])))",
+          "legendFormat": "{{job_name}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ]
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Sidekiq threads: busy vs capacity",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(sidekiq_process_busy{cluster=\"$cluster\"})",
+          "legendFormat": "busy"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(sidekiq_process_concurrency{cluster=\"$cluster\"})",
+          "legendFormat": "capacity"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Failed jobs per second",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(rate(sidekiq_stats_failed{cluster=\"$cluster\"}[$__rate_interval]))",
+          "legendFormat": "failed/s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": "row",
+      "title": "Web (Puma), database pool and streaming",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 29
+      },
+      "panels": []
+    },
+    {
+      "id": 21,
+      "type": "timeseries",
+      "title": "Web requests per second by pod",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 30
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (pod) (rate(ruby_http_requests_total{cluster=\"$cluster\",job=\"mastodon/mastodon-rails\"}[$__rate_interval]))",
+          "legendFormat": "{{pod}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 22,
+      "type": "timeseries",
+      "title": "Puma request backlog",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 30
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(ruby_puma_request_backlog{cluster=\"$cluster\"})",
+          "legendFormat": "waiting requests"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 23,
+      "type": "timeseries",
+      "title": "Puma threads",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 30
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(ruby_puma_running_threads{cluster=\"$cluster\"})",
+          "legendFormat": "running"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(ruby_puma_max_threads{cluster=\"$cluster\"})",
+          "legendFormat": "max"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(ruby_puma_thread_pool_capacity{cluster=\"$cluster\"})",
+          "legendFormat": "free capacity"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 24,
+      "type": "timeseries",
+      "title": "Database connection pool (busy and waiting)",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 38
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(ruby_active_record_connection_pool_busy{cluster=\"$cluster\"})",
+          "legendFormat": "web busy"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(ruby_active_record_connection_pool_waiting{cluster=\"$cluster\"})",
+          "legendFormat": "web waiting"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(active_record_connection_pool_busy{cluster=\"$cluster\"})",
+          "legendFormat": "sidekiq busy"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(active_record_connection_pool_waiting{cluster=\"$cluster\"})",
+          "legendFormat": "sidekiq waiting"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 25,
+      "type": "timeseries",
+      "title": "Streaming: connected clients",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 38
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(connected_clients{cluster=\"$cluster\",job=\"mastodon/mastodon-streaming\"})",
+          "legendFormat": "clients"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 26,
+      "type": "timeseries",
+      "title": "Streaming: messages sent per second",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 38
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(messages_sent_total{cluster=\"$cluster\",job=\"mastodon/mastodon-streaming\"}[$__rate_interval]))",
+          "legendFormat": "messages/s"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ops",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 30,
+      "type": "row",
+      "title": "Errors in logs",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "panels": []
+    },
+    {
+      "id": 31,
+      "type": "logs",
+      "title": "Mastodon errors (web and Sidekiq)",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{cluster=\"$cluster\",namespace=\"mastodon\",level=~\"error|fatal\"}",
+          "queryType": "range"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true
+      }
+    }
+  ]
 }

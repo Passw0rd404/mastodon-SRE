@@ -1,0 +1,659 @@
+{
+  "uid": "mastodon-frontend",
+  "title": "Mastodon / Frontend and edge",
+  "description": "What visitors experience: blackbox synthetic checks plus Traefik traffic, errors and latency.",
+  "tags": ["mastodon", "frontend", "traefik", "blackbox"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 2,
+  "editable": true,
+  "refresh": "30s",
+  "time": { "from": "now-6h", "to": "now" },
+
+  "templating": {
+    "list": [
+      {
+        "name": "ds_mimir",
+        "label": "Mimir",
+        "type": "datasource",
+        "query": "prometheus",
+        "refresh": 1,
+        "hide": 0
+      },
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+        "definition": "label_values(traefik_entrypoint_requests_total, cluster)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_entrypoint_requests_total, cluster)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": false,
+        "multi": false
+      },
+      {
+        "name": "target",
+        "label": "Check",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+        "definition": "label_values(probe_success{cluster=\"$cluster\"}, target)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(probe_success{cluster=\"$cluster\"}, target)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      },
+      {
+        "name": "router",
+        "label": "Route",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+        "definition": "label_values(traefik_router_requests_total{cluster=\"$cluster\",router!~\".*@internal\"}, router)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(traefik_router_requests_total{cluster=\"$cluster\",router!~\".*@internal\"}, router)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      }
+    ]
+  },
+
+  "panels": [
+
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Availability (selected range)",
+      "description": "Share of successful synthetic checks over the chosen time range.",
+      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg(avg_over_time(probe_success{cluster=\"$cluster\",target=~\"$target\"}[$__range]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 0.99 },
+              { "color": "green", "value": 0.999 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Checks failing now",
+      "description": "Number of synthetic checks that failed on their latest run.",
+      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(probe_success{cluster=\"$cluster\",target=~\"$target\"} == 0) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "red", "value": 1 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Slowest check now",
+      "description": "Longest total duration among the latest synthetic checks.",
+      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(probe_duration_seconds{cluster=\"$cluster\",target=~\"$target\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 1 },
+              { "color": "red", "value": 3 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "TLS certificate expires in",
+      "description": "Time left on the soonest-expiring certificate seen by the HTTPS checks.",
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "min(probe_ssl_earliest_cert_expiry{cluster=\"$cluster\",target=~\"$target\"} - time())"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 604800 },
+              { "color": "green", "value": 2592000 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Requests per second",
+      "description": "All requests entering through Traefik, every entrypoint.",
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(traefik_entrypoint_requests_total{cluster=\"$cluster\"}[$__rate_interval]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "reqps" },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Server errors (5xx share)",
+      "description": "Share of requests that ended in a 5xx response, for the selected routes.",
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "(sum(rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\",code=~\"5..\"}[$__rate_interval])) or vector(0)) / sum(rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\"}[$__rate_interval]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 2,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 0.01 },
+              { "color": "red", "value": 0.05 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+
+    {
+      "id": 10,
+      "type": "row",
+      "title": "Synthetic checks (blackbox)",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 4 },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "state-timeline",
+      "title": "Check status",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "probe_success{cluster=\"$cluster\",target=~\"$target\"}",
+          "legendFormat": "{{target}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": { "text": "DOWN", "color": "red", "index": 0 },
+                "1": { "text": "UP", "color": "green", "index": 1 }
+              }
+            }
+          ],
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "green", "value": 1 }
+            ]
+          },
+          "custom": { "fillOpacity": 80, "lineWidth": 0 }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showValue": "never",
+        "mergeValues": true,
+        "rowHeight": 0.8,
+        "alignValue": "left",
+        "legend": { "showLegend": false }
+      }
+    },
+    {
+      "id": 12,
+      "type": "timeseries",
+      "title": "Response time by check",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 5 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "probe_duration_seconds{cluster=\"$cluster\",target=~\"$target\"}",
+          "legendFormat": "{{target}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 13,
+      "type": "timeseries",
+      "title": "Where the time goes (HTTP phases, average)",
+      "description": "Stacked average of resolve, connect, TLS, processing and transfer time across HTTP checks.",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 13 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "avg by (phase) (probe_http_duration_seconds{cluster=\"$cluster\",target=~\"$target\"})",
+          "legendFormat": "{{phase}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": { "fillOpacity": 30, "stacking": { "mode": "normal", "group": "A" } }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 14,
+      "type": "bargauge",
+      "title": "TLS certificate time left",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 13 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "probe_ssl_earliest_cert_expiry{cluster=\"$cluster\",target=~\"$target\"} - time()",
+          "legendFormat": "{{target}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "min": 0,
+          "max": 31536000,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "red", "value": null },
+              { "color": "orange", "value": 604800 },
+              { "color": "green", "value": 2592000 }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "showUnfilled": true,
+        "reduceOptions": { "calcs": ["lastNotNull"] }
+      }
+    },
+
+    {
+      "id": 20,
+      "type": "row",
+      "title": "Traffic (Traefik)",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
+      "panels": []
+    },
+    {
+      "id": 21,
+      "type": "timeseries",
+      "title": "Requests per second by status code",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 22 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (code) (rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\"}[$__rate_interval]))",
+          "legendFormat": "{{code}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "mean"] },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 22,
+      "type": "timeseries",
+      "title": "Errors per second (4xx and 5xx)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 22 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\",code=~\"5..\"}[$__rate_interval]))",
+          "legendFormat": "5xx"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\",code=~\"4..\"}[$__rate_interval]))",
+          "legendFormat": "4xx"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "5xx" },
+            "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ]
+          },
+          {
+            "matcher": { "id": "byName", "options": "4xx" },
+            "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ]
+          }
+        ]
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 23,
+      "type": "timeseries",
+      "title": "Requests per second by route",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 30 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (router) (rate(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\"}[$__rate_interval]))",
+          "legendFormat": "{{router}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "mean"] },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 24,
+      "type": "timeseries",
+      "title": "Response time by route (95th percentile)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 30 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.95, sum by (le, router) (rate(traefik_router_request_duration_seconds_bucket{cluster=\"$cluster\",router=~\"$router\"}[$__rate_interval])))",
+          "legendFormat": "{{router}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "table", "placement": "bottom", "calcs": ["lastNotNull", "max"] },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 25,
+      "type": "timeseries",
+      "title": "Response time percentiles (all entrypoints)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 38 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "histogram_quantile(0.50, sum by (le) (rate(traefik_entrypoint_request_duration_seconds_bucket{cluster=\"$cluster\"}[$__rate_interval])))",
+          "legendFormat": "p50"
+        },
+        {
+          "refId": "B",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(traefik_entrypoint_request_duration_seconds_bucket{cluster=\"$cluster\"}[$__rate_interval])))",
+          "legendFormat": "p95"
+        },
+        {
+          "refId": "C",
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(traefik_entrypoint_request_duration_seconds_bucket{cluster=\"$cluster\"}[$__rate_interval])))",
+          "legendFormat": "p99"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "s", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 26,
+      "type": "timeseries",
+      "title": "Traffic in and out",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 38 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(traefik_entrypoint_requests_bytes_total{cluster=\"$cluster\"}[$__rate_interval]))",
+          "legendFormat": "in (requests)"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(rate(traefik_entrypoint_responses_bytes_total{cluster=\"$cluster\"}[$__rate_interval]))",
+          "legendFormat": "out (responses)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "Bps", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+    {
+      "id": 27,
+      "type": "timeseries",
+      "title": "Open connections",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 38 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum by (entrypoint) (traefik_open_connections{cluster=\"$cluster\"})",
+          "legendFormat": "{{entrypoint}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } },
+        "overrides": []
+      },
+      "options": {
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi" }
+      }
+    },
+
+    {
+      "id": 30,
+      "type": "row",
+      "title": "Per-route summary",
+      "collapsed": false,
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 46 },
+      "panels": []
+    },
+    {
+      "id": 31,
+      "type": "table",
+      "title": "Routes: requests, 4xx and 5xx (selected range)",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 47 },
+      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "format": "table",
+          "expr": "sum by (router) (increase(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\"}[$__range]))"
+        },
+        {
+          "refId": "B",
+          "instant": true,
+          "format": "table",
+          "expr": "sum by (router) (increase(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\",code=~\"5..\"}[$__range]))"
+        },
+        {
+          "refId": "C",
+          "instant": true,
+          "format": "table",
+          "expr": "sum by (router) (increase(traefik_router_requests_total{cluster=\"$cluster\",router=~\"$router\",code=~\"4..\"}[$__range]))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "decimals": 0 },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [ { "displayName": "Requests", "desc": true } ]
+      },
+      "transformations": [
+        { "id": "merge", "options": {} },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": { "Time": true },
+            "renameByName": {
+              "router": "Route",
+              "Value #A": "Requests",
+              "Value #B": "5xx",
+              "Value #C": "4xx"
+            }
+          }
+        }
+      ]
+    }
+
+  ]
+}
