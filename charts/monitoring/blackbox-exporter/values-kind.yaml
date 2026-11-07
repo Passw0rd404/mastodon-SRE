@@ -1,0 +1,27 @@
+config:
+  modules:
+    http_2xx_insecure:
+      prober: http
+      timeout: 8s
+      http:
+        preferred_ip_protocol: ip4
+        tls_config:
+          insecure_skip_verify: true
+
+serviceMonitor:
+  targets:
+    - name: mastodon-home
+      url: https://traefik.traefik-system.svc.cluster.local/
+      hostname: mastodon.local
+      module: http_2xx_insecure
+    - name: mastodon-instance-api
+      url: https://traefik.traefik-system.svc.cluster.local/api/v1/instance
+      hostname: mastodon.local
+      module: http_2xx_insecure
+    - name: mastodon-streaming-health
+      url: https://traefik.traefik-system.svc.cluster.local/api/v1/streaming/health
+      hostname: mastodon.local
+      module: http_2xx_insecure
+    - name: cluster-dns
+      url: kube-dns.kube-system.svc.cluster.local:53
+      module: dns_kubernetes

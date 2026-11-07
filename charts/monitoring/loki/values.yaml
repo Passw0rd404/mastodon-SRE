@@ -1,0 +1,79 @@
+deploymentMode: Distributed
+
+monitoring:
+  serviceMonitor:
+    enabled: true
+  dashboards:
+    enabled: true
+
+ingester:
+  replicas: 3
+distributor:
+  replicas: 2
+querier:
+  replicas: 2
+queryFrontend:
+  replicas: 2
+queryScheduler:
+  replicas: 2
+indexGateway:
+  replicas: 2
+compactor:
+  replicas: 1
+ruler:
+  replicas: 1
+backend:
+  replicas: 0
+read:
+  replicas: 0
+write:
+  replicas: 0
+
+defaults:
+  extraArgs:
+    - -config.expand-env=true
+  extraEnv:
+    - name: R2_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: access-key-id}
+    - name: R2_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: secret-access-key}
+
+loki:
+  auth_enabled: true
+  limits_config:
+    retention_period: 336h
+  compactor:
+    retention_enabled: true
+    delete_request_store: s3
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  storage:
+    type: s3
+    bucketNames:
+      chunks: sre-loki
+      ruler: sre-loki
+    s3:
+      region: auto
+      accessKeyId: ${R2_ACCESS_KEY_ID}
+      secretAccessKey: ${R2_SECRET_ACCESS_KEY}
+      s3ForcePathStyle: true
+      insecure: false
+
+chunksCache:
+  allocatedMemory: 1024
+resultsCache:
+  allocatedMemory: 512
+
+lokiCanary:
+  enabled: false
+test:
+  enabled: false

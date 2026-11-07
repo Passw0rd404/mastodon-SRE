@@ -1,0 +1,6 @@
+config:
+  metrics:
+    port: "9090"
+podMonitor:
+  enabled: true
+  interval: 30s

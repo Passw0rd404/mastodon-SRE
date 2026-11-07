@@ -15,6 +15,11 @@ redis:
 
   haproxy:
     enabled: true
+    hardAntiAffinity: false
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
 
   persistentVolume:
     enabled: false

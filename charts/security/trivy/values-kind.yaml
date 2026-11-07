@@ -1,0 +1,2 @@
+operator:
+  scanJobsConcurrentLimit: 1

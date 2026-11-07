@@ -1,0 +1,55 @@
+{{- if .Values.cluster.monitoring.businessMetrics.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.cluster.name }}-business-queries
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    cnpg.io/reload: ""
+data:
+  queries: |
+    mastodon_users:
+      primary: true
+      target_databases:
+        - mastodon
+      query: |
+        SELECT
+          (SELECT pg_catalog.count(*) FROM public.users WHERE NOT disabled) AS enabled_total,
+          (SELECT pg_catalog.count(*) FROM public.users WHERE created_at > pg_catalog.now() - interval '24 hours') AS signups_24h,
+          (SELECT pg_catalog.count(*) FROM public.users WHERE current_sign_in_at > pg_catalog.now() - interval '24 hours') AS active_24h,
+          (SELECT pg_catalog.count(*) FROM public.users WHERE current_sign_in_at > pg_catalog.now() - interval '7 days') AS active_7d,
+          (SELECT pg_catalog.count(*) FROM public.users WHERE confirmed_at IS NULL) AS unconfirmed
+      metrics:
+        - enabled_total: { usage: "GAUGE", description: "Enabled local user accounts" }
+        - signups_24h: { usage: "GAUGE", description: "New local users in the last 24 hours" }
+        - active_24h: { usage: "GAUGE", description: "Local users who signed in during the last 24 hours" }
+        - active_7d: { usage: "GAUGE", description: "Local users who signed in during the last 7 days" }
+        - unconfirmed: { usage: "GAUGE", description: "Local users who have not confirmed their email" }
+
+    mastodon_content:
+      primary: true
+      target_databases:
+        - mastodon
+      query: |
+        SELECT
+          pg_catalog.count(*) AS local_statuses_24h,
+          pg_catalog.count(DISTINCT s.account_id) AS local_posters_24h
+        FROM public.statuses s
+        JOIN public.accounts a ON a.id = s.account_id
+        WHERE a.domain IS NULL
+          AND s.created_at > pg_catalog.now() - interval '24 hours'
+      metrics:
+        - local_statuses_24h: { usage: "GAUGE", description: "Posts by local users in the last 24 hours" }
+        - local_posters_24h: { usage: "GAUGE", description: "Local users who posted in the last 24 hours" }
+
+    mastodon_moderation:
+      primary: true
+      target_databases:
+        - mastodon
+      query: |
+        SELECT pg_catalog.count(*) AS open_reports
+        FROM public.reports
+        WHERE action_taken_at IS NULL
+      metrics:
+        - open_reports: { usage: "GAUGE", description: "Moderation reports not yet handled" }
+{{- end }}

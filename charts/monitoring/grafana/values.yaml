@@ -36,6 +36,39 @@ datasources:
         secureJsonData:
           httpHeaderValue1: sre
 
+      - name: Loki
+        uid: loki
+        type: loki
+        access: proxy
+        url: http://loki-gateway.monitoring.svc.cluster.local
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+          derivedFields:
+            - name: TraceID
+              matcherType: label
+              matcherRegex: trace_id
+              url: "$${__value.raw}"
+              datasourceUid: tempo
+        secureJsonData:
+          httpHeaderValue1: sre
+
+      - name: Tempo
+        uid: tempo
+        type: tempo
+        access: proxy
+        url: http://tempo.monitoring.svc.cluster.local:3200
+        jsonData:
+          httpHeaderName1: X-Scope-OrgID
+          tracesToLogsV2:
+            datasourceUid: loki
+            spanStartTimeShift: "-1m"
+            spanEndTimeShift: "1m"
+            tags:
+              - key: service.name
+                value: otel_service
+        secureJsonData:
+          httpHeaderValue1: sre
+
 sidecar:
   dashboards:
     enabled: true

@@ -1,4 +1,8 @@
 # Shared settings (any cluster). Endpoint and bucket live in values-<env>.yaml.
+metaMonitoring:
+  serviceMonitor:
+    enabled: true
+
 minio:
   enabled: false
 

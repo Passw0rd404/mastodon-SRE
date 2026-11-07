@@ -1,0 +1,186 @@
+controller:
+  type: daemonset
+
+alloy:
+  clustering:
+    enabled: true
+  mounts:
+    varlog: true
+  securityContext:
+    runAsUser: 0
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  configMap:
+    content: |
+      discovery.kubernetes "pods" {
+        role = "pod"
+        selectors {
+          role  = "pod"
+          field = "spec.nodeName=" + sys.env("NODE_NAME")
+        }
+      }
+
+      discovery.relabel "pod_logs" {
+        targets = discovery.kubernetes.pods.targets
+        rule {
+          source_labels = ["__meta_kubernetes_namespace"]
+          target_label  = "namespace"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "container"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_container_name"]
+          target_label  = "otel_service"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          regex         = "mastodon-sidekiq-.*"
+          target_label  = "otel_service"
+          replacement   = "mastodon-sidekiq"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_label_app_kubernetes_io_name"]
+          target_label  = "app"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_namespace", "__meta_kubernetes_pod_container_name"]
+          separator     = "/"
+          target_label  = "job"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+          separator     = "/"
+          target_label  = "__path__"
+          replacement   = "/var/log/pods/*$1/*.log"
+        }
+      }
+
+      local.file_match "pod_logs" {
+        path_targets = discovery.relabel.pod_logs.output
+      }
+
+      loki.source.file "pod_logs" {
+        targets    = local.file_match.pod_logs.targets
+        forward_to = [loki.process.pod_logs.receiver]
+      }
+
+      loki.process "pod_logs" {
+        stage.cri {}
+
+        stage.match {
+          selector = `{container="traefik"}`
+          stage.json {
+            expressions = { level = "level", trace_id = "trace_id" }
+          }
+          stage.labels {
+            values = { level = "" }
+          }
+          stage.structured_metadata {
+            values = { trace_id = "" }
+          }
+        }
+
+        stage.match {
+          selector = `{container="mastodon-web"}`
+          stage.regex {
+            expression = `^[A-Z], \[[^\]]+\]\s+(?P<level>[A-Z]+) -- : (?:\[trace_id=(?P<trace_id>[0-9a-f]+)\])?`
+          }
+          stage.template {
+            source   = "level"
+            template = "{{ `{{ ToLower .Value }}` }}"
+          }
+          stage.labels {
+            values = { level = "" }
+          }
+          stage.structured_metadata {
+            values = { trace_id = "" }
+          }
+        }
+
+        stage.match {
+          selector = `{otel_service="mastodon-sidekiq"}`
+          stage.drop {
+            expression = `^INFO .*class=Scheduler::\w+.*: (start|done)$`
+          }
+          stage.regex {
+            expression = `^(?P<level>[A-Z]+)\s`
+          }
+          stage.template {
+            source   = "level"
+            template = "{{ `{{ ToLower .Value }}` }}"
+          }
+          stage.labels {
+            values = { level = "" }
+          }
+        }
+
+        stage.match {
+          selector = `{container="falco"}`
+          stage.json {
+            expressions = { level = "priority", rule = "rule" }
+          }
+          stage.template {
+            source   = "level"
+            template = "{{ `{{ ToLower .Value }}` }}"
+          }
+          stage.labels {
+            values = { level = "" }
+          }
+          stage.structured_metadata {
+            values = { rule = "" }
+          }
+        }
+
+        stage.match {
+          selector = `{container="postgres"}`
+          stage.json {
+            expressions = { level = "level", severity = "record.error_severity" }
+          }
+          stage.template {
+            source   = "level"
+      template = "{{ `{{ if .severity }}{{ ToLower .severity }}{{ else }}{{ .Value }}{{ end }}` }}"
+          }
+          stage.labels {
+            values = { level = "" }
+          }
+        }
+
+        forward_to = [loki.write.loki.receiver]
+      }
+
+      loki.write "loki" {
+        endpoint {
+          url       = sys.env("LOKI_URL")
+          tenant_id = "sre"
+        }
+        external_labels = {
+          cluster = sys.env("CLUSTER_NAME"),
+        }
+      }
+      loki.source.kubernetes_events "events" {
+        log_format = "json"
+        forward_to = [loki.process.events.receiver]
+        clustering {
+          enabled = true
+        }
+      }
+
+      loki.process "events" {
+        stage.static_labels {
+          values = {
+            job = "kubernetes-events",
+          }
+        }
+        forward_to = [loki.write.loki.receiver]
+      }
+
+serviceMonitor:
+  enabled: true

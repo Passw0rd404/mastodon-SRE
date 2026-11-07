@@ -1,5 +1,5 @@
 cluster:
-  instances: 3
+  instances: 2
 
   affinity:
     enablePodAntiAffinity: true
@@ -7,7 +7,7 @@ cluster:
     podAntiAffinityType: required
 
 poolerRW:
-  instances: 2
+  instances: 1
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -17,7 +17,7 @@ poolerRW:
               cnpg.io/poolerName: mastodon-pooler-rw
 
 poolerRO:
-  instances: 2
+  instances: 1
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

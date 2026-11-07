@@ -701,7 +701,7 @@ mastodon:
     # For more information, please see:
     # https://docs.joinmastodon.org/admin/config/#prometheus
     prometheus:
-      enabled: false
+      enabled: true
 
       # Port for the exporter to listen on.
       port: 9394
@@ -714,7 +714,7 @@ mastodon:
       # Prometheus for sidekiq pods.
       sidekiq:
         # Collect per-job metrics for every job.
-        detailed: false
+        detailed: true
 
   # Open Telemetry configuration for all deployments. Component-specific
   # configuration will override these values.
@@ -757,9 +757,7 @@ ingress:
   enabled: true
 
   className: traefik
-  annotations:
-    traefik.ingress.kubernetes.io/router.tls: "true"
-    traefik.ingress.kubernetes.io/router.tls.certresolver: cloudflare-resolver
+  annotations: {}
   hosts:
     - host: mastodon.yourdomain.tld
       paths:

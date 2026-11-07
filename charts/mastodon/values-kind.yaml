@@ -25,6 +25,20 @@ elasticsearch:
     password: password
 
 mastodon:
+  otel:
+    enabled: true
+    endpointUri: http://tempo.monitoring.svc.cluster.local:4318
+  extraEnvVars:
+    OTEL_EXPORTER_OTLP_HEADERS: "X-Scope-OrgID=sre"
+  web:
+    otel:
+      enabled: true
+      endpointUri: http://tempo.monitoring.svc.cluster.local:4318
+  sidekiq:
+    otel:
+      enabled: true
+      endpointUri: http://tempo.monitoring.svc.cluster.local:4318
+
   createAdmin:
     enabled: true
     username: admin
@@ -66,6 +80,3 @@ mastodon:
       accessKeyId: access-key-id
       secretAccessKey: secret-access-key
 
-  metrics:
-    prometheus:
-      enabled: true

@@ -1,6 +1,10 @@
+scrape:
+  apiserver: true
+  coredns: true
+
 controller:
   type: deployment
-  replicas: 2
+  replicas: 1
 
 serviceMonitor:
   enabled: true
@@ -95,3 +99,82 @@ alloy:
           enabled = true
         }
       }
+
+      {{- if .Values.scrape.apiserver }}
+      discovery.kubernetes "apiserver" {
+        role = "endpoints"
+        namespaces {
+          names = ["default"]
+        }
+      }
+
+      discovery.relabel "apiserver" {
+        targets = discovery.kubernetes.apiserver.targets
+        rule {
+          source_labels = ["__meta_kubernetes_service_name"]
+          regex         = "kubernetes"
+          action        = "keep"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_endpoint_port_name"]
+          regex         = "https"
+          action        = "keep"
+        }
+      }
+
+      prometheus.scrape "apiserver" {
+        targets         = discovery.relabel.apiserver.output
+        forward_to      = [prometheus.remote_write.mimir.receiver]
+        job_name        = "apiserver"
+        scheme          = "https"
+        scrape_interval = "30s"
+        authorization {
+          type             = "Bearer"
+          credentials_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        }
+        tls_config {
+          ca_file     = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+          server_name = "kubernetes"
+        }
+        clustering {
+          enabled = true
+        }
+      }
+      {{- end }}
+
+      {{- if .Values.scrape.coredns }}
+      discovery.kubernetes "coredns" {
+        role = "endpoints"
+        namespaces {
+          names = ["kube-system"]
+        }
+      }
+
+      discovery.relabel "coredns" {
+        targets = discovery.kubernetes.coredns.targets
+        rule {
+          source_labels = ["__meta_kubernetes_service_label_k8s_app"]
+          regex         = "kube-dns"
+          action        = "keep"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_endpoint_port_name"]
+          regex         = "metrics"
+          action        = "keep"
+        }
+        rule {
+          source_labels = ["__meta_kubernetes_pod_name"]
+          target_label  = "pod"
+        }
+      }
+
+      prometheus.scrape "coredns" {
+        targets         = discovery.relabel.coredns.output
+        forward_to      = [prometheus.remote_write.mimir.receiver]
+        job_name        = "coredns"
+        scrape_interval = "30s"
+        clustering {
+          enabled = true
+        }
+      }
+      {{- end }}

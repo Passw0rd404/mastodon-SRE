@@ -1,5 +1,14 @@
 # values-cloud.yaml
 traefik:
+  metrics:
+    prometheus:
+      addRoutersLabels: true
+      service:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+        honorLabels: true
+
   env:
     - name: CF_DNS_API_TOKEN
       valueFrom:
@@ -35,3 +44,10 @@ traefik:
         enabled: true
       serviceMonitor:
         enabled: true
+
+  log:
+    format: json
+    level: INFO
+  accessLog:
+    enabled: true
+    format: json

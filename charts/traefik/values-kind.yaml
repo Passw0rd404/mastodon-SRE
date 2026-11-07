@@ -1,6 +1,30 @@
 # values-local.yaml — traefik
 traefik:
+  metrics:
+    prometheus:
+      addRoutersLabels: true
+      service:
+        enabled: true
+      serviceMonitor:
+        enabled: true
+        honorLabels: true
+
   env: []
+
+  log:
+    format: json
+    level: INFO
+  accessLog:
+    enabled: true
+    format: json
+  tracing:
+    otlp:
+      enabled: true
+      http:
+        enabled: true
+        endpoint: http://tempo.monitoring.svc.cluster.local:4318/v1/traces
+        headers:
+          X-Scope-OrgID: sre
 
   persistence:
     enabled: false
@@ -16,10 +40,3 @@ traefik:
       nodePort: 30080
     websecure:
       nodePort: 30443
-
-  metrics:
-    prometheus:
-      service:
-        enabled: true
-      serviceMonitor:
-        enabled: true

@@ -2,7 +2,7 @@ namespace: mastodon
 
 cluster:
   name: mastodon
-  instances: 1
+  instances: 2
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
   affinity:
@@ -40,6 +40,8 @@ cluster:
   monitoring:
     podMonitor:
       enabled: false
+    businessMetrics:
+      enabled: true
 
 backup:
   enabled: false
@@ -54,7 +56,7 @@ backup:
     maxParallel: 4
   data:
     compression: gzip
-  schedule: "0 0 0 * * *"
+    schedule: "0 0 0 * * *"
 
   # provider-specific — only the block matching `provider:` above is used
   s3:

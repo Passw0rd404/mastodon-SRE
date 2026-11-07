@@ -1,0 +1,10 @@
+alloy:
+  extraEnv:
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+    - name: LOKI_URL
+      value: http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push
+    - name: CLUSTER_NAME
+      value: kind-mastodon

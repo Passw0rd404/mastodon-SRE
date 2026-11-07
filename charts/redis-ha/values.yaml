@@ -1,6 +1,6 @@
 redis:
   namespace: mastodon
-  replicas: 3
+  replicas: 2
   image:
     repository: valkey/valkey
     tag: "8.0.1-alpine"
@@ -29,6 +29,12 @@ redis:
 
   haproxy:
     enabled: true
+    replicas: 1
+    hardAntiAffinity: false
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
 
   persistentVolume:
     enabled: true

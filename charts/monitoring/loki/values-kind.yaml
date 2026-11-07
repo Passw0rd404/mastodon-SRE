@@ -1,0 +1,26 @@
+loki:
+  storage:
+    s3:
+      endpoint: 1ca37da478719196fd809bc2a62f57b0.r2.cloudflarestorage.com
+  commonConfig:
+    replication_factor: 1
+
+ingester:
+  replicas: 1
+  zoneAwareReplication:
+    enabled: false
+distributor:
+  replicas: 1
+querier:
+  replicas: 1
+queryFrontend:
+  replicas: 1
+queryScheduler:
+  replicas: 1
+indexGateway:
+  replicas: 1
+
+chunksCache:
+  enabled: false
+resultsCache:
+  enabled: false

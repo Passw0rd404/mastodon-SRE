@@ -62,5 +62,10 @@ spec:
 
   monitoring:
     enablePodMonitor: {{ .monitoring.podMonitor.enabled | default false }}
+    {{- if .monitoring.businessMetrics.enabled }}
+    customQueriesConfigMap:
+      - name: {{ .name }}-business-queries
+        key: queries
+    {{- end }}
 
 {{- end }}

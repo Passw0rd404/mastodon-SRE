@@ -1,0 +1,31 @@
+tempo:
+  multitenancyEnabled: true
+  reportingEnabled: false
+  extraArgs:
+    config.expand-env: "true"
+  extraEnv:
+    - name: R2_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: access-key-id}
+    - name: R2_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef: {name: r2-monitoring-creds, key: secret-access-key}
+  storage:
+    trace:
+      backend: s3
+      s3:
+        bucket: sre-tempo
+        region: auto
+        forcepathstyle: true
+        insecure: false
+        access_key: ${R2_ACCESS_KEY_ID}
+        secret_key: ${R2_SECRET_ACCESS_KEY}
+      wal:
+        path: /var/tempo/wal
+
+serviceMonitor:
+  enabled: true
+
+persistence:
+  enabled: true
+  size: 5Gi

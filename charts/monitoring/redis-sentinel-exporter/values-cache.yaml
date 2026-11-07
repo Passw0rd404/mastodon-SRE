@@ -5,3 +5,9 @@ auth:
   secret:
     name: sentinel-cache-creds
     key: password
+serviceMonitor:
+  enabled: true
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
