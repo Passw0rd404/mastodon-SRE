@@ -2,14 +2,21 @@
   "uid": "mastodon-security",
   "title": "Mastodon / Security",
   "description": "Runtime threats (Falco), image and configuration risk (Trivy), and suspicious traffic at the edge (Traefik).",
-  "tags": ["mastodon", "security", "falco", "trivy"],
+  "tags": [
+    "mastodon",
+    "security",
+    "falco",
+    "trivy"
+  ],
   "timezone": "browser",
   "schemaVersion": 39,
   "version": 1,
   "editable": true,
   "refresh": "1m",
-  "time": { "from": "now-24h", "to": "now" },
-
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
   "templating": {
     "list": [
       {
@@ -32,7 +39,10 @@
         "name": "cluster",
         "label": "Cluster",
         "type": "query",
-        "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
         "definition": "label_values(up, cluster)",
         "query": {
           "qryType": 1,
@@ -46,27 +56,37 @@
       }
     ]
   },
-
   "panels": [
-
     {
       "id": 90,
       "type": "text",
       "title": "About this dashboard",
-      "gridPos": { "h": 3, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "options": {
         "mode": "markdown",
         "content": "Runtime alerts come from Falco, read from Loki. Image and configuration findings come from the Trivy operator. Edge signals come from Traefik metrics and access logs. On kind every Falco pod reports each event, so alerts without a pod name (`k8s_pod_name=<NA>`) are hidden here. On a real cluster remove that filter if you also want host-level alerts."
       }
     },
-
     {
       "id": 1,
       "type": "stat",
       "title": "Falco alerts (selected range)",
       "description": "Runtime security alerts that name a pod. Duplicates from other kind nodes are hidden.",
-      "gridPos": { "h": 4, "w": 4, "x": 0, "y": 3 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 3
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -80,9 +100,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "orange", "value": 1 },
-              { "color": "red", "value": 50 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
             ]
           }
         },
@@ -91,7 +120,11 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -99,8 +132,16 @@
       "type": "stat",
       "title": "Critical vulnerabilities",
       "description": "Critical CVEs across all scanned container images.",
-      "gridPos": { "h": 4, "w": 4, "x": 4, "y": 3 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -113,8 +154,14 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "red", "value": 1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
             ]
           }
         },
@@ -123,7 +170,11 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -131,8 +182,16 @@
       "type": "stat",
       "title": "High vulnerabilities",
       "description": "High-severity CVEs across all scanned container images.",
-      "gridPos": { "h": 4, "w": 4, "x": 8, "y": 3 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -145,8 +204,14 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "orange", "value": 1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
             ]
           }
         },
@@ -155,7 +220,11 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -163,8 +232,16 @@
       "type": "stat",
       "title": "Exposed secrets in images",
       "description": "Passwords or keys that Trivy found baked into container images.",
-      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 3 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -177,8 +254,14 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "red", "value": 1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
             ]
           }
         },
@@ -187,7 +270,11 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -195,8 +282,16 @@
       "type": "stat",
       "title": "Config findings (High and Critical)",
       "description": "Risky workload settings such as running as root or privileged containers.",
-      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 3 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -209,8 +304,14 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "orange", "value": 1 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 1
+              }
             ]
           }
         },
@@ -219,7 +320,11 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
@@ -227,8 +332,16 @@
       "type": "stat",
       "title": "Auth errors at the edge (401 and 403)",
       "description": "Requests answered with 401 or 403 during the selected range.",
-      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 3 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -241,9 +354,18 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green", "value": null },
-              { "color": "orange", "value": 20 },
-              { "color": "red", "value": 200 }
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 200
+              }
             ]
           }
         },
@@ -252,24 +374,40 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
-
     {
       "id": 10,
       "type": "row",
       "title": "Runtime threats (Falco)",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
       "panels": []
     },
     {
       "id": 11,
       "type": "timeseries",
       "title": "Alerts over time by priority",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -284,22 +422,38 @@
           "custom": {
             "drawStyle": "bars",
             "fillOpacity": 60,
-            "stacking": { "mode": "normal", "group": "A" }
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
           }
         },
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom" },
-        "tooltip": { "mode": "multi" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
       }
     },
     {
       "id": 12,
       "type": "bargauge",
       "title": "Most triggered rules",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -309,22 +463,37 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0 },
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
         "overrides": []
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 13,
       "type": "logs",
       "title": "Recent Falco alerts",
-      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 16 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -339,21 +508,33 @@
         "enableLogDetails": true
       }
     },
-
     {
       "id": 20,
       "type": "row",
       "title": "Image and configuration risk (Trivy)",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 25 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
       "panels": []
     },
     {
       "id": 21,
       "type": "bargauge",
       "title": "Vulnerabilities by severity",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 26 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 26
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -362,28 +543,116 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0, "color": { "mode": "fixed" } },
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "color": {
+            "mode": "fixed"
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Critical" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
-          { "matcher": { "id": "byName", "options": "High" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ] },
-          { "matcher": { "id": "byName", "options": "Medium" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
-          { "matcher": { "id": "byName", "options": "Low" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } } ] },
-          { "matcher": { "id": "byName", "options": "Unknown" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "gray" } } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 22,
       "type": "bargauge",
       "title": "Critical and High by namespace",
-      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 26 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 26
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -392,22 +661,37 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0 },
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
         "overrides": []
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 23,
       "type": "table",
       "title": "Top 10 images by critical vulnerabilities",
-      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 26 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 26
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -422,13 +706,20 @@
       },
       "options": {
         "showHeader": true,
-        "sortBy": [ { "displayName": "Critical CVEs", "desc": true } ]
+        "sortBy": [
+          {
+            "displayName": "Critical CVEs",
+            "desc": true
+          }
+        ]
       },
       "transformations": [
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true },
+            "excludeByName": {
+              "Time": true
+            },
             "renameByName": {
               "image_repository": "Image",
               "image_tag": "Tag",
@@ -442,8 +733,16 @@
       "id": 24,
       "type": "bargauge",
       "title": "Exposed secrets by severity",
-      "gridPos": { "h": 7, "w": 6, "x": 0, "y": 34 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -452,28 +751,116 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0, "color": { "mode": "fixed" } },
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "color": {
+            "mode": "fixed"
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Critical" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
-          { "matcher": { "id": "byName", "options": "High" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ] },
-          { "matcher": { "id": "byName", "options": "Medium" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
-          { "matcher": { "id": "byName", "options": "Low" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } } ] },
-          { "matcher": { "id": "byName", "options": "Unknown" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "gray" } } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 25,
       "type": "bargauge",
       "title": "Workload config findings by severity",
-      "gridPos": { "h": 7, "w": 6, "x": 6, "y": 34 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -482,28 +869,116 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0, "color": { "mode": "fixed" } },
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "color": {
+            "mode": "fixed"
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Critical" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
-          { "matcher": { "id": "byName", "options": "High" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ] },
-          { "matcher": { "id": "byName", "options": "Medium" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
-          { "matcher": { "id": "byName", "options": "Low" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } } ] },
-          { "matcher": { "id": "byName", "options": "Unknown" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "gray" } } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 26,
       "type": "bargauge",
       "title": "Permission (RBAC) findings by severity",
-      "gridPos": { "h": 7, "w": 6, "x": 12, "y": 34 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -512,28 +987,116 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0, "color": { "mode": "fixed" } },
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "color": {
+            "mode": "fixed"
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Critical" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
-          { "matcher": { "id": "byName", "options": "High" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ] },
-          { "matcher": { "id": "byName", "options": "Medium" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
-          { "matcher": { "id": "byName", "options": "Low" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } } ] },
-          { "matcher": { "id": "byName", "options": "Unknown" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "gray" } } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
     {
       "id": 27,
       "type": "bargauge",
       "title": "Node and control-plane findings by severity",
-      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 34 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 18,
+        "y": 34
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -542,59 +1105,184 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0, "color": { "mode": "fixed" } },
+        "defaults": {
+          "unit": "short",
+          "min": 0,
+          "color": {
+            "mode": "fixed"
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Critical" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "red" } } ] },
-          { "matcher": { "id": "byName", "options": "High" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "orange" } } ] },
-          { "matcher": { "id": "byName", "options": "Medium" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "yellow" } } ] },
-          { "matcher": { "id": "byName", "options": "Low" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "blue" } } ] },
-          { "matcher": { "id": "byName", "options": "Unknown" }, "properties": [ { "id": "color", "value": { "mode": "fixed", "fixedColor": "gray" } } ] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
         ]
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
-
     {
       "id": 30,
       "type": "row",
       "title": "Edge security signals (Traefik)",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 41 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 41
+      },
       "panels": []
     },
     {
       "id": 31,
       "type": "timeseries",
       "title": "Auth and abuse responses (401, 403, 404, 429)",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 42 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 42
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
-          "expr": "sum by (code) (rate(traefik_router_requests_total{cluster=\"$cluster\",code=~\"401|403|404|429\"}[$__rate_interval]))",
-          "legendFormat": "{{code}}"
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",code=\"401\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "401 unauthorized"
+        },
+        {
+          "refId": "B",
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",code=\"403\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "403 forbidden"
+        },
+        {
+          "refId": "C",
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",code=\"404\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "404 not found"
+        },
+        {
+          "refId": "D",
+          "expr": "sum(rate(traefik_router_requests_total{cluster=\"$cluster\",code=\"429\"}[$__rate_interval])) or vector(0)",
+          "legendFormat": "429 rate limited"
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom" },
-        "tooltip": { "mode": "multi" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
       }
     },
     {
       "id": 32,
       "type": "timeseries",
       "title": "Server errors by route (5xx)",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 42 },
-      "datasource": { "type": "prometheus", "uid": "${ds_mimir}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 42
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -603,27 +1291,51 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } },
+        "defaults": {
+          "unit": "reqps",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom" },
-        "tooltip": { "mode": "multi" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
       }
     },
     {
       "id": 33,
       "type": "timeseries",
-      "title": "Sign-in attempts by response code (Traefik access log)",
-      "description": "POST requests to /auth/sign_in grouped by the status code Traefik returned.",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 50 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "title": "Sign-in attempts (Traefik access log)",
+      "description": "POST requests to /auth/sign_in. The first line is the total; the others are split by the status code Traefik returned.",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 50
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
           "queryType": "range",
-          "expr": "sum by (DownstreamStatus) (count_over_time({cluster=\"$cluster\", container=\"traefik\"} | json | RequestPath = \"/auth/sign_in\" | RequestMethod = \"POST\" [$__interval]))",
-          "legendFormat": "{{DownstreamStatus}}"
+          "legendFormat": "all attempts",
+          "expr": "sum(count_over_time({cluster=\"$cluster\", container=\"traefik\"} |= \"RequestPath\" | json | RequestPath = \"/auth/sign_in\" | RequestMethod = \"POST\" [$__interval])) or vector(0)"
+        },
+        {
+          "refId": "B",
+          "queryType": "range",
+          "legendFormat": "status {{DownstreamStatus}}",
+          "expr": "sum by (DownstreamStatus) (count_over_time({cluster=\"$cluster\", container=\"traefik\"} |= \"RequestPath\" | json | RequestPath = \"/auth/sign_in\" | RequestMethod = \"POST\" [$__interval]))"
         }
       ],
       "fieldConfig": {
@@ -631,23 +1343,35 @@
           "unit": "short",
           "custom": {
             "drawStyle": "bars",
-            "fillOpacity": 60,
-            "stacking": { "mode": "normal", "group": "A" }
+            "fillOpacity": 60
           }
         },
         "overrides": []
       },
       "options": {
-        "legend": { "displayMode": "list", "placement": "bottom" },
-        "tooltip": { "mode": "multi" }
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
       }
     },
     {
       "id": 34,
       "type": "bargauge",
       "title": "Top client IPs by error responses (4xx and 5xx)",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 50 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 50
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -657,23 +1381,34 @@
         }
       ],
       "fieldConfig": {
-        "defaults": { "unit": "short", "min": 0 },
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
         "overrides": []
       },
       "options": {
         "displayMode": "gradient",
         "orientation": "horizontal",
         "showUnfilled": true,
-        "reduceOptions": { "calcs": ["lastNotNull"] }
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
       }
     },
-
     {
       "id": 40,
       "type": "row",
       "title": "Cluster warnings",
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 58 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 58
+      },
       "panels": []
     },
     {
@@ -681,8 +1416,16 @@
       "type": "logs",
       "title": "Kubernetes warning events",
       "description": "Crashes, failed scheduling, image pull errors and similar, from the Kubernetes event stream.",
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 59 },
-      "datasource": { "type": "loki", "uid": "${ds_loki}" },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds_loki}"
+      },
       "targets": [
         {
           "refId": "A",
@@ -697,6 +1440,5 @@
         "enableLogDetails": true
       }
     }
-
   ]
 }

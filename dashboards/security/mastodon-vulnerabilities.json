@@ -1,0 +1,1080 @@
+{
+  "uid": "mastodon-vulnerabilities",
+  "title": "Mastodon / Vulnerabilities",
+  "description": "Container image vulnerabilities from the Trivy operator: what is most common, what to fix first, and a searchable list.",
+  "tags": [
+    "mastodon",
+    "security",
+    "trivy",
+    "vulnerabilities"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "refresh": "5m",
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "ds_mimir",
+        "label": "Mimir",
+        "type": "datasource",
+        "query": "prometheus",
+        "refresh": 1,
+        "hide": 0
+      },
+      {
+        "name": "cluster",
+        "label": "Cluster",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(trivy_image_vulnerabilities, cluster)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(trivy_image_vulnerabilities, cluster)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": false,
+        "multi": false
+      },
+      {
+        "name": "severity",
+        "label": "Severity",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\"}, severity)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\"}, severity)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      },
+      {
+        "name": "namespace",
+        "label": "Namespace",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\"}, namespace)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\"}, namespace)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      },
+      {
+        "name": "image",
+        "label": "Image",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_mimir}"
+        },
+        "definition": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\",namespace=~\"$namespace\"}, image_repository)",
+        "query": {
+          "qryType": 1,
+          "query": "label_values(trivy_image_vulnerabilities{cluster=\"$cluster\",namespace=~\"$namespace\"}, image_repository)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "sort": 1,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*"
+      },
+      {
+        "name": "cve",
+        "label": "CVE contains",
+        "type": "textbox",
+        "query": "",
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "hide": 0
+      },
+      {
+        "name": "pkg",
+        "label": "Package contains",
+        "type": "textbox",
+        "query": "",
+        "current": {
+          "text": "",
+          "value": ""
+        },
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "hide": 0
+      }
+    ]
+  },
+  "panels": [
+    {
+      "id": 90,
+      "type": "text",
+      "title": "About this dashboard",
+      "gridPos": {
+        "h": 3,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "Data comes from the Trivy operator. This dashboard needs per-CVE metrics (`operator.metricsVulnIdEnabled: true`). Use the filters and search boxes at the top; every panel except the severity trend responds to them. Only vulnerabilities that have a fix are listed (`ignoreUnfixed`). One \"finding\" is one CVE in one package in one container."
+      }
+    },
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Distinct CVEs",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(count by (vuln_id) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Total findings",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"}) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Critical CVEs",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(count by (vuln_id) (trivy_vulnerability_id{cluster=\"$cluster\",severity=\"Critical\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Images affected",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(count by (image_repository, image_tag) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "Packages affected",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "count(count by (resource) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Most widespread CVE (images)",
+      "description": "The number of images that contain the single most common CVE.",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 3
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "max(count by (vuln_id) (count by (vuln_id, image_repository, image_tag) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"}))) or vector(0)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": "row",
+      "title": "What keeps coming back",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "panels": []
+    },
+    {
+      "id": 11,
+      "type": "table",
+      "title": "Most common CVEs (found in the most images)",
+      "description": "Each row is one CVE. \"Images\" is how many different images contain it.",
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "format": "table",
+          "expr": "topk(15, count by (vuln_id, severity, vuln_title) (count by (vuln_id, severity, vuln_title, image_repository, image_tag) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "custom": {
+            "filterable": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "Critical": {
+                        "color": "red",
+                        "index": 0
+                      },
+                      "High": {
+                        "color": "orange",
+                        "index": 1
+                      },
+                      "Medium": {
+                        "color": "yellow",
+                        "index": 2
+                      },
+                      "Low": {
+                        "color": "blue",
+                        "index": 3
+                      },
+                      "Unknown": {
+                        "color": "gray",
+                        "index": 4
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Images",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "vuln_id": 0,
+              "severity": 1,
+              "Value": 2,
+              "vuln_title": 3
+            },
+            "renameByName": {
+              "vuln_id": "CVE",
+              "severity": "Severity",
+              "vuln_title": "Title",
+              "Value": "Images"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "table",
+      "title": "Packages with the most distinct CVEs",
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 8
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "format": "table",
+          "expr": "topk(15, count by (resource) (count by (resource, vuln_id) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "custom": {
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Distinct CVEs",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "resource": "Package",
+              "Value": "Distinct CVEs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "bargauge",
+      "title": "Images with the most findings",
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 17
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "legendFormat": "{{image_repository}}:{{image_tag}}",
+          "expr": "topk(10, count by (image_repository, image_tag) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"}))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "showUnfilled": true,
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 14,
+      "type": "piechart",
+      "title": "Findings by severity",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 10,
+        "y": 17
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "legendFormat": "{{severity}}",
+          "expr": "count by (severity) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "pieType": "donut",
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        }
+      }
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Vulnerabilities over time by severity",
+      "description": "Uses the cheaper summary metric, so the CVE and package search boxes do not apply here.",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 17
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "legendFormat": "{{severity}}",
+          "expr": "sum by (severity) (trivy_image_vulnerabilities{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Critical"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "High"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Medium"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "yellow"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Low"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Unknown"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "gray"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 20,
+      "type": "row",
+      "title": "Where to act first",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "panels": []
+    },
+    {
+      "id": 21,
+      "type": "table",
+      "title": "Upgrade first: packages behind the most Critical and High CVEs",
+      "description": "Each row is a package version and the version that fixes it. \"CVEs fixed\" is how many findings that single upgrade clears.",
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "format": "table",
+          "expr": "topk(20, count by (resource, installed_version, fixed_version) (trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",severity=~\"Critical|High\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"}))"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "custom": {
+            "filterable": true
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "CVEs fixed",
+            "desc": true
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {
+              "resource": 0,
+              "installed_version": 1,
+              "fixed_version": 2,
+              "Value": 3
+            },
+            "renameByName": {
+              "resource": "Package",
+              "installed_version": "Installed",
+              "fixed_version": "Upgrade to",
+              "Value": "CVEs fixed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "type": "row",
+      "title": "Explorer (search and filter every finding)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "panels": []
+    },
+    {
+      "id": 31,
+      "type": "table",
+      "title": "All findings (first 1000; narrow with the filters above)",
+      "description": "Click a column header to sort, or use the filter icon on a column to search it.",
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_mimir}"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "instant": true,
+          "format": "table",
+          "expr": "topk(1000, trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "filterable": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "Critical": {
+                        "color": "red",
+                        "index": 0
+                      },
+                      "High": {
+                        "color": "orange",
+                        "index": 1
+                      },
+                      "Medium": {
+                        "color": "yellow",
+                        "index": 2
+                      },
+                      "Low": {
+                        "color": "blue",
+                        "index": 3
+                      },
+                      "Unknown": {
+                        "color": "gray",
+                        "index": 4
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm"
+      },
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "__name__": true,
+              "cluster": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "pod": true,
+              "service": true,
+              "class": true,
+              "container_name": true,
+              "image_digest": true,
+              "image_registry": true,
+              "last_modified_date": true,
+              "published_date": true,
+              "name": true,
+              "package_type": true,
+              "pkg_path": true,
+              "resource_kind": true,
+              "resource_name": true
+            },
+            "indexByName": {
+              "vuln_id": 0,
+              "severity": 1,
+              "vuln_score": 2,
+              "resource": 3,
+              "installed_version": 4,
+              "fixed_version": 5,
+              "image_repository": 6,
+              "image_tag": 7,
+              "namespace": 8,
+              "vuln_title": 9
+            },
+            "renameByName": {
+              "vuln_id": "CVE",
+              "severity": "Severity",
+              "vuln_score": "Score",
+              "resource": "Package",
+              "installed_version": "Installed",
+              "fixed_version": "Fixed in",
+              "image_repository": "Image",
+              "image_tag": "Tag",
+              "namespace": "Namespace",
+              "vuln_title": "Title"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
