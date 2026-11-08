@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: kubernetes-mcp, namespace: ai}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: ai-kubernetes-mcp-readonly}
+rules:
+  - apiGroups: [""]
+    resources: [pods, pods/log, services, endpoints, namespaces, nodes, events, configmaps,
+                persistentvolumeclaims, persistentvolumes, resourcequotas, limitranges,
+                replicationcontrollers, serviceaccounts]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments, statefulsets, daemonsets, replicasets]
+    verbs: [get, list, watch]
+  - apiGroups: [batch]
+    resources: [jobs, cronjobs]
+    verbs: [get, list, watch]
+  - apiGroups: [networking.k8s.io]
+    resources: [ingresses, networkpolicies]
+    verbs: [get, list, watch]
+  - apiGroups: [autoscaling]
+    resources: [horizontalpodautoscalers]
+    verbs: [get, list, watch]
+  - apiGroups: [events.k8s.io]
+    resources: [events]
+    verbs: [get, list, watch]
+  - apiGroups: [metrics.k8s.io]
+    resources: [pods, nodes]
+    verbs: [get, list]
+  - apiGroups: [storage.k8s.io]
+    resources: [storageclasses]
+    verbs: [get, list, watch]
+  - apiGroups: [aquasecurity.github.io]
+    resources: ["*"]
+    verbs: [get, list, watch]
+  - apiGroups: [apiextensions.k8s.io]
+    resources: [customresourcedefinitions]
+    verbs: [get, list]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: ai-kubernetes-mcp-readonly}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: ai-kubernetes-mcp-readonly}
+subjects: [{kind: ServiceAccount, name: kubernetes-mcp, namespace: ai}]
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: kubernetes-mcp-config, namespace: ai}
+data:
+  config.toml: |
+    port = "8080"
+    read_only = true
+    stateless = true
+    toolsets = ["core"]
+
+    [[denied_resources]]
+    group = ""
+    version = "v1"
+    kind = "Secret"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubernetes-mcp
+  namespace: ai
+  labels: {app.kubernetes.io/name: kubernetes-mcp}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app.kubernetes.io/name: kubernetes-mcp}
+  template:
+    metadata:
+      labels: {app.kubernetes.io/name: kubernetes-mcp}
+    spec:
+      serviceAccountName: kubernetes-mcp
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: kubernetes-mcp
+          image: quay.io/containers/kubernetes_mcp_server:v0.1.2   # verify the tag exists on quay.io
+          args: ["--config", "/etc/kubernetes-mcp-server/config.toml"]
+          ports: [{name: http, containerPort: 8080}]
+          readinessProbe: {httpGet: {path: /healthz, port: http}}
+          volumeMounts: [{name: config, mountPath: /etc/kubernetes-mcp-server, readOnly: true}]
+          resources:
+            requests: {cpu: 20m, memory: 64Mi}
+            limits: {memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+      volumes:
+        - name: config
+          configMap: {name: kubernetes-mcp-config}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: kubernetes-mcp, namespace: ai}
+spec:
+  selector: {app.kubernetes.io/name: kubernetes-mcp}
+  ports: [{name: http, port: 8080, targetPort: http}]

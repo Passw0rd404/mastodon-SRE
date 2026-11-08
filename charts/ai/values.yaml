@@ -1,0 +1,100 @@
+fullnameOverride: hermes
+
+bootstrap:
+  overwrite: true
+
+extraInitContainers:
+  - name: fix-data-perms
+    image: busybox:1.38
+    command: ["sh", "-c", "chmod 755 /opt/data"]
+    securityContext: {runAsUser: 0}
+    volumeMounts:
+      - {name: data, mountPath: /opt/data}
+
+replicaCount: 1
+controller:
+  type: deployment
+
+serviceAccount:
+  automountServiceAccountToken: false
+
+env: {}
+extraEnvFrom:
+  - secretRef:
+      name: hermes-secrets
+
+dashboard:
+  enabled: true
+  auth:
+    provider: external
+
+service:
+  enabled: true
+  ports:
+    - name: dashboard
+      port: 9119
+      targetPort: 9119
+
+apiServer:
+  enabled: false
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+resources:
+  requests: {cpu: 100m, memory: 512Mi}
+  limits: {memory: 1Gi}
+
+config:
+  model:
+    provider: azure-foundry
+    api_mode: chat_completions
+    default: gpt-41-mini
+  terminal:
+    backend: local
+  agent:
+    gateway_timeout: 1800
+    disabled_toolsets:
+      - terminal
+      - file
+      - code_execution
+      - browser
+      - web
+      - coding
+      - debugging
+      - connections
+      - catalog
+      - delegation
+      - cronjob
+      - clarify
+      - image_gen
+      - video_gen
+      - tts
+      - vision
+      - computer_use
+      - kanban
+  mcp_servers:
+    grafana:
+      url: http://grafana-mcp.ai.svc.cluster.local:8000/mcp
+      headers:
+        Authorization: "Bearer ${MCP_GRAFANA_SERVER_TOKEN}"
+      tools:
+        prompts: false
+        resources: false
+        exclude: [grafana_api_request, list_provisioning_repositories, validate_provisioning_file, suggest_loki_alloy_label_config]
+    kubernetes:
+      url: http://kubernetes-mcp.ai.svc.cluster.local:8080/mcp
+      tools:
+        prompts: false
+        resources: false
+
+soul:
+  text: |
+    You are a read-only SRE assistant inside this Kubernetes cluster. You can only
+    query monitoring data (Grafana: Mimir metrics, Loki logs, Tempo traces) and
+    read Kubernetes objects, including Falco events in Loki ({container="falco"})
+    and Trivy operator reports. You cannot change anything; if asked to, explain
+    the command the engineer should run themselves.
+    Keep token use low: aggregate before fetching raw data, use short time ranges,
+    narrow label selectors, and small limits. Summarise findings, cite what you queried.

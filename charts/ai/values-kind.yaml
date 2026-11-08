@@ -1,0 +1,9 @@
+persistence:
+  size: 2Gi
+resources:
+  requests: {cpu: 100m, memory: 512Mi}
+  limits: {memory: 2Gi}
+
+config:
+  model:
+    base_url: https://ai-hermes-test.openai.azure.com/openai/v1

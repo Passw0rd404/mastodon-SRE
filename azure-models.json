@@ -1,0 +1,5254 @@
+[
+  {
+    "Format": "OpenAI",
+    "Name": "whisper",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 3,
+          "maximum": 9999,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-26T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.whisper"
+      }
+    ],
+    "Version": "001"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4o",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 50,
+          "step": 50
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 100000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2024-05-13"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4o",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 50,
+          "step": 50
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 100000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4o"
+      }
+    ],
+    "Version": "2024-08-06"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4o-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4o-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 25,
+          "step": 25
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o-mini-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 100000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2024-07-18"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4o",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 50,
+          "step": 50
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4o"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2024-11-20"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "text-embedding-ada-002",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.text-embedding-ada-002"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.text-embedding-ada-002"
+      }
+    ],
+    "Version": "2"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "text-embedding-3-small",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.text-embedding-3-small"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.text-embedding-3-small"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "text-embedding-3-large",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.text-embedding-3-large"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 120,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 10.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.text-embedding-3-large"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "o1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 50000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 6000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.o1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2024-12-17"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "o3-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 10000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.o3-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 25,
+          "step": 25
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.o3-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2025-01-31"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "o3",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.o3"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.o3"
+      }
+    ],
+    "Version": "2025-04-16"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "model-router",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-27T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.ModelRouter"
+      }
+    ],
+    "Version": "2025-05-19"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "model-router",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-27T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.ModelRouter"
+      }
+    ],
+    "Version": "2025-08-07"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "model-router",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-20T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.ModelRouter"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-20T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.ModelRouter"
+      }
+    ],
+    "Version": "2025-11-18"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "o4-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.o4-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-11-19T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.o4-mini-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-11-19T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DeveloperTier.o4-mini-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-19T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.o4-mini"
+      }
+    ],
+    "Version": "2025-04-16"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4.1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.gpt4.1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 25,
+          "step": 25
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 250,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DeveloperTier.gpt4.1-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4.1"
+      }
+    ],
+    "Version": "2025-04-14"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4.1-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.gpt4.1-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1-mini-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 250,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DeveloperTier.gpt4.1-mini-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 25,
+          "step": 25
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4.1-mini"
+      }
+    ],
+    "Version": "2025-04-14"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-4.1-nano",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1-nano"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt4.1-nano-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 250,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-04-13T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DeveloperTier.gpt4.1-nano-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-14T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-4.1-nano"
+      }
+    ],
+    "Version": "2025-04-14"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-09T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-09T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-5"
+      }
+    ],
+    "Version": "2025-08-07"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2025-08-07"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5-nano",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5-nano"
+      }
+    ],
+    "Version": "2025-08-07"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5-codex",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-03-17T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5-codex"
+      }
+    ],
+    "Version": "2025-09-15"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-07T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5-pro"
+      }
+    ],
+    "Version": "2025-10-06"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "Standard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.Standard.gpt-5.1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 50,
+          "step": 50
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "ProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.ProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-5.1"
+      }
+    ],
+    "Version": "2025-11-13"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.1-codex",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-15T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.1-codex"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-15T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2025-11-13"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.1-codex-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-15T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.1-codex-mini"
+      }
+    ],
+    "Version": "2025-11-13"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.1-codex-max",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-18T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.1-codex-max"
+      }
+    ],
+    "Version": "2025-12-04"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.2",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-06-08T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.2"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-06-08T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2025-12-11"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.2-codex",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.2-codex"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-07-13T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-01-14"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.3-codex",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-08-24T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.3-codex"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-08-24T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-02-24"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-02T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.4"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-02T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.4"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-02T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-02T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-5.4"
+      }
+    ],
+    "Version": "2026-03-05"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.4-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-07T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.4-pro"
+      }
+    ],
+    "Version": "2026-03-05"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.4-nano",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-21T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.4-nano"
+      }
+    ],
+    "Version": "2026-03-17"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.4-mini",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-21T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.4-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-21T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.4-mini"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-21T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 100000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-21T00:00:00+00:00",
+        "name": "GlobalBatch",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalBatch.gpt-5.4-mini"
+      }
+    ],
+    "Version": "2026-03-17"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.5",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-26T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.5"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-26T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.5"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 30000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-26T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-04-24"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-chat-latest",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-11-17T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 10.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-chat-latest"
+      }
+    ],
+    "Version": "2026-05-05"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.6-sol",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.6-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.6-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.DataZoneProvisionedManaged"
+      }
+    ],
+    "Version": "2026-07-09"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.6-luna",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.6-luna"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.6-luna"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 400000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 400000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.DataZoneProvisionedManaged"
+      }
+    ],
+    "Version": "2026-07-09"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-5.6-terra",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-5.6-terra"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-5.6-terra"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 400000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 400000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.DataZoneProvisionedManaged"
+      }
+    ],
+    "Version": "2026-07-09"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-chat-latest",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-12T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-chat-latest"
+      }
+    ],
+    "Version": "2026-08-06"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-6-astra",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-6-astra"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-6-astra"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-01-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-09-03"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-6-luna",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-6-luna"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-6-luna"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-09-22"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-6-sol",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-6-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-6-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-09-22"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-6.1-sol",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-6.1-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-6.1-sol"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 1000000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2028-03-11T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "OpenAI.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "2026-09-29"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-chat-latest",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-02T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-chat-latest"
+      }
+    ],
+    "Version": "2026-10-07"
+  },
+  {
+    "Format": "OpenAI",
+    "Name": "gpt-6.1-terra",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-26T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.GlobalStandard.gpt-6.1-terra"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-26T00:00:00+00:00",
+        "name": "DataZoneStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "OpenAI.DataZoneStandard.gpt-6.1-terra"
+      }
+    ],
+    "Version": "2026-10-26"
+  },
+  {
+    "Format": "Alibaba",
+    "Name": "qwen3-32b",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Qwen3-32B-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Qwen3-32B-finetune"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "Codestral-2501",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Codestral-2501"
+      }
+    ],
+    "Version": "2"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "cohere-command-a",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 100,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-Command-A"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-embed-v3-english",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalStandard.MaaS"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-embed-v3-multilingual",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalStandard.MaaS"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-R1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 5000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-08-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-R1"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 3000,
+          "minimum": 100,
+          "step": 100
+        },
+        "cost": null,
+        "deprecationDate": "2026-08-13T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "embed-v-4-0",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 15000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-06-01T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Embed-V-4-0"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      }
+    ],
+    "Version": "2"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      }
+    ],
+    "Version": "3"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      }
+    ],
+    "Version": "4"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      }
+    ],
+    "Version": "5"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-3.3-70B-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-3.3-70B-Instruct-Finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 3000,
+          "minimum": 15,
+          "step": 5
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "9"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "Ministral-3B",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Ministral-3B"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Ministral-3B-finetune"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "Mistral-large",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalStandard.MaaS"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "mistral-small-2503",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.mistral-small-2503"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "Mistral-Large-3",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 100000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Mistral-Large-3"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "2"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "3"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "4"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "5"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "6"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4"
+      }
+    ],
+    "Version": "7"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4-mini-instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4-mini-instruct"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4-multimodal-instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4-multimodal-instruct"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Phi-4-mini-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Phi-4-mini-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-4-Maverick-17B-128E-Instruct-FP8",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-4-Maverick-17B-128E-Instruct-FP8"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Llama-4-Scout-17B-16E-Instruct",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Llama-4-Scout-17B-16E-Instruct"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "mistral-medium-2505",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1000,
+          "maximum": 10000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.mistral-medium-2505"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Black Forest Labs",
+    "Name": "FLUX-1.1-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.FLUX-1.1-pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Black Forest Labs",
+    "Name": "FLUX.1-Kontext-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.FLUX.1-Kontext-pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "OpenAI-OSS",
+    "Name": "gpt-oss-120b",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-15T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.gpt-oss-120b"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-15T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.gpt-oss-120b"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "OpenAI-OSS",
+    "Name": "gpt-oss-20b",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.GPT-OSS-20B-Finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-03T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.GPT-OSS-20B-Finetune"
+      }
+    ],
+    "Version": "11"
+  },
+  {
+    "Format": "Alibaba",
+    "Name": "qwen3.6-35b-a3b",
+    "SKUs": [],
+    "Version": "1"
+  },
+  {
+    "Format": "Alibaba",
+    "Name": "qwen3.8-27b",
+    "SKUs": [],
+    "Version": "1"
+  },
+  {
+    "Format": "Meta",
+    "Name": "Muse-Glimmer-30B",
+    "SKUs": [],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-rerank-v4.0-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-Rerank-V4-Pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-rerank-v4.0-fast",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-09-13T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-Rerank-V4-Fast"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Black Forest Labs",
+    "Name": "FLUX.2-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-12-31T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.FLUX.2-pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V3.2",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-11-01T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V3.2"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": null,
+          "maximum": 3000,
+          "minimum": 100,
+          "step": 100
+        },
+        "cost": null,
+        "deprecationDate": "2099-06-01T00:00:00+00:00",
+        "name": "GlobalProvisionedManaged",
+        "rateLimits": null,
+        "usageName": "AIServices.GlobalProvisionedManaged"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V3.2-Speciale",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-11-01T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V3.2-Speciale"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "MoonshotAI",
+    "Name": "Kimi-K2.5",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-26T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Kimi-K2.5"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "mistral-document-ai-2512",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-12-31T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.mistral-document-ai-2512"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Black Forest Labs",
+    "Name": "FLUX.2-flex",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-12-31T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.FLUX.2-flex"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4-1-fast-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-12-31T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4-1-fast-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4-1-fast-non-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2099-12-31T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4-1-fast-non-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4-20-non-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-06T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4-20-non-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4-20-reasoning",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-06T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4-20-reasoning"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "MoonshotAI",
+    "Name": "Kimi-K2.6",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Kimi-K2.6"
+      }
+    ],
+    "Version": "2026-04-20"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V4-Flash",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-20T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V4-Flash"
+      }
+    ],
+    "Version": "2026-04-23"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4.3",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-05-12T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4.3"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V4-Pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2028-02-20T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V4-Pro"
+      }
+    ],
+    "Version": "2026-04-23"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "mistral-ocr-4-0",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-01T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.mistral-ocr-4-0"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Mistral AI",
+    "Name": "mistral-medium-3-5",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-01T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.mistral-medium-3-5"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-command-a-plus-05-2026",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-10-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-command-a-plus-05-2026"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "MoonshotAI",
+    "Name": "Kimi-K2.7-Code",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-04-16T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Kimi-K2.7-Code"
+      }
+    ],
+    "Version": "2026-06-12"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V4-Flash-0731",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-03T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V4-Flash-0731"
+      }
+    ],
+    "Version": "2026-07-31"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4.6",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-08-24T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4.6"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-parse-v5",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 1,
+          "maximum": 1000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-15T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-parse-v5"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V4.1-Flash",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2026-12-15T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V4.1-Flash"
+      }
+    ],
+    "Version": "2026-09-10"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-Embed-V5-Fast",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 100,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-23T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-Embed-V5-Fast"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-Embed-V5-Pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 100,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-01-23T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-Embed-V5-Pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "xAI",
+    "Name": "grok-4.7",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-10-05T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.grok-4.7"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "Microsoft-Decision-1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-04T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Microsoft-Decision-1"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-rerank-v5-fast",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 100,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-12T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-rerank-v5-fast"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "Cohere",
+    "Name": "Cohere-rerank-v5-pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 100,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-02-12T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Cohere-rerank-v5-pro"
+      }
+    ],
+    "Version": "1"
+  },
+  {
+    "Format": "MoonshotAI",
+    "Name": "Kimi-K3.1-Pro",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 500,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-11-04T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.Kimi-K3.1-Pro"
+      }
+    ],
+    "Version": "2026-11-04"
+  },
+  {
+    "Format": "DeepSeek",
+    "Name": "DeepSeek-V4.1-Flash-1017",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 5000,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-03-06T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.DeepSeek-V4.1-Flash-1017"
+      }
+    ],
+    "Version": "2026-10-17"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "MAI-Thinking-1",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-03-02T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.MAI-Thinking-1"
+      }
+    ],
+    "Version": "2026-06-01"
+  },
+  {
+    "Format": "Microsoft",
+    "Name": "MAI-Code-1.1-Flash",
+    "SKUs": [
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 10,
+          "maximum": 1000000,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-12-09T00:00:00+00:00",
+        "name": "GlobalStandard",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.GlobalStandard.MAI-Code-1.1-Flash-finetune"
+      },
+      {
+        "capacity": {
+          "allowedValues": null,
+          "default": 50,
+          "maximum": 250,
+          "minimum": null,
+          "step": null
+        },
+        "cost": null,
+        "deprecationDate": "2027-12-09T00:00:00+00:00",
+        "name": "DeveloperTier",
+        "rateLimits": [
+          {
+            "count": 1.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          },
+          {
+            "count": 1000.0,
+            "renewalPeriod": 60.0,
+            "rules": null
+          }
+        ],
+        "usageName": "AIServices.DeveloperTier.MAI-Code-1.1-Flash-finetune"
+      }
+    ],
+    "Version": "2026-09-15"
+  }
+]

@@ -944,8 +944,8 @@
     {
       "id": 31,
       "type": "table",
-      "title": "All findings (first 1000; narrow with the filters above)",
-      "description": "Click a column header to sort, or use the filter icon on a column to search it.",
+      "title": "All findings",
+      "description": "Every finding that matches the filters above. Click a column header to sort, or use the filter icon on a column to search it.",
       "gridPos": {
         "h": 14,
         "w": 24,
@@ -961,7 +961,7 @@
           "refId": "A",
           "instant": true,
           "format": "table",
-          "expr": "topk(1000, trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"})"
+          "expr": "trivy_vulnerability_id{cluster=\"$cluster\",severity=~\"$severity\",namespace=~\"$namespace\",image_repository=~\"$image\",vuln_id=~\"(?i).*$cve.*\",resource=~\"(?i).*$pkg.*\"}"
         }
       ],
       "fieldConfig": {
@@ -1019,7 +1019,8 @@
       },
       "options": {
         "showHeader": true,
-        "cellHeight": "sm"
+        "cellHeight": "sm",
+        "enablePagination": true
       },
       "transformations": [
         {
