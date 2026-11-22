@@ -1,0 +1,10 @@
+# Example only. Copy it, replace every CHANGE_ME, then: kubectl apply -f <file>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: es-exporter-creds
+  namespace: monitoring
+type: Opaque
+stringData:
+  username: CHANGE_ME
+  password: CHANGE_ME

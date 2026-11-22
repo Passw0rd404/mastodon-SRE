@@ -1,0 +1,10 @@
+# Example only. Copy it, replace every CHANGE_ME, then: kubectl apply -f <file>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mastodon-s3-creds
+  namespace: mastodon
+type: Opaque
+stringData:
+  access-key-id: CHANGE_ME
+  secret-access-key: CHANGE_ME

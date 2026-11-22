@@ -1,0 +1,10 @@
+# Example only. Copy it, replace every CHANGE_ME, then: kubectl apply -f <file>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana-admin
+  namespace: monitoring
+type: Opaque
+stringData:
+  admin-user: CHANGE_ME
+  admin-password: CHANGE_ME

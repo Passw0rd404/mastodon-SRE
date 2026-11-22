@@ -1,0 +1,55 @@
+version: '3'
+
+vars:
+  ARGOCD_VERSION: v3.6.2
+  ARGOCD_MANIFEST: https://raw.githubusercontent.com/argoproj/argo-cd/{{.ARGOCD_VERSION}}/manifests/install.yaml
+
+tasks:
+  guard:
+    internal: true
+    preconditions:
+      - sh: test -n "{{.CTX}}"
+        msg: "CTX is required, e.g. task bootstrap CTX=kind-argo-test (the current kubectl context is never used)"
+      - sh: kubectl config get-contexts -o name | grep -qx "{{.CTX}}"
+        msg: "kubectl context '{{.CTX}}' does not exist"
+    cmds:
+      - |
+        echo "Target: {{.CTX}} -> $(kubectl --context {{.CTX}} config view --minify -o jsonpath='{.clusters[0].cluster.server}')"
+
+  argocd:install:
+    desc: Install Argo CD and the Application health check
+    deps: [guard]
+    preconditions:
+      - sh: curl -fsSI {{.ARGOCD_MANIFEST}} >/dev/null
+        msg: "Argo CD manifest not reachable: {{.ARGOCD_MANIFEST}}"
+    cmds:
+      - kubectl --context {{.CTX}} create namespace argocd --dry-run=client -o yaml | kubectl --context {{.CTX}} apply -f -
+      - kubectl --context {{.CTX}} apply -n argocd --server-side --force-conflicts -f {{.ARGOCD_MANIFEST}}
+      - kubectl --context {{.CTX}} apply -n argocd --server-side --field-manager=bootstrap -f charts/argocd/install/argocd-cm-health.yaml
+      - kubectl --context {{.CTX}} -n argocd wait --for=condition=Available deploy --all --timeout=300s
+      - kubectl --context {{.CTX}} -n argocd rollout status statefulset/argocd-application-controller --timeout=300s
+
+  argocd:root:
+    desc: Apply the root app-of-apps
+    deps: [guard]
+    cmds:
+      - kubectl --context {{.CTX}} apply -f charts/argocd/root.yaml
+
+  bootstrap:
+    desc: Install Argo CD and point it at this repo
+    cmds:
+      - task: argocd:install
+      - task: argocd:root
+
+  argocd:ui:
+    desc: Port-forward the Argo CD UI to https://localhost:8080
+    deps: [guard]
+    cmds:
+      - kubectl --context {{.CTX}} -n argocd port-forward svc/argocd-server 8080:443
+
+  argocd:password:
+    desc: Print the initial admin password
+    deps: [guard]
+    cmds:
+      - |
+        kubectl --context {{.CTX}} -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d; echo
